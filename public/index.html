@@ -3,476 +3,172 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Axvyn - Free Online Tools</title>
+  <title>Axvyn SRT Translator</title>
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      padding: 20px;
       font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      color: #1f1f1f;
+      background: #f5f5f5;
+      color: #222;
+      padding: 20px;
     }
     .container {
-      max-width: 920px;
+      max-width: 800px;
       margin: 0 auto;
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
       padding: 30px;
     }
     h1 {
-      margin: 0 0 10px;
       text-align: center;
-      font-size: 32px;
+      margin-bottom: 10px;
     }
     .subtitle {
       text-align: center;
       color: #666;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-    .info {
-      text-align: center;
-      color: #999;
-      font-size: 12px;
-      margin-bottom: 30px;
-    }
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-    .card-header {
-      background: #f0f0f0;
-      padding: 14px 16px;
-      font-weight: bold;
-      border-bottom: 1px solid #ddd;
-    }
-    .card-body {
-      padding: 20px;
+      margin-bottom: 25px;
     }
     label {
       display: block;
-      margin: 12px 0 6px;
       font-weight: bold;
+      margin-top: 18px;
+      margin-bottom: 6px;
       font-size: 13px;
     }
-    input, textarea, select, button {
+    input, select, button {
       width: 100%;
-      padding: 10px 12px;
-      border-radius: 4px;
+      padding: 12px;
+      border-radius: 6px;
       border: 1px solid #ccc;
       font-size: 14px;
-      font-family: Arial, sans-serif;
-    }
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-    input[type="range"] {
-      padding: 0;
     }
     button {
+      margin-top: 18px;
       background: #007bff;
       color: white;
       border: none;
       cursor: pointer;
-      margin-top: 10px;
       font-weight: bold;
     }
-    button:hover { background: #005ec2; }
-    button.secondary { background: #6c757d; }
-    button.secondary:hover { background: #5a6268; }
-    button.danger { background: #dc3545; }
-    button.danger:hover { background: #bd2130; }
-    button.success { background: #28a745; }
-    button.success:hover { background: #1e7e34; }
+    button:hover {
+      background: #005ec2;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
     .msg {
       display: none;
-      margin-top: 12px;
+      margin-top: 16px;
       padding: 10px;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 13px;
     }
-    .msg.show { display: block; }
+    .msg.show {
+      display: block;
+    }
     .msg.error {
       background: #ffe5e5;
-      border: 1px solid #f0b4b4;
-      color: #990000;
+      border: 1px solid #e8b9b9;
+      color: #9d0000;
     }
     .msg.success {
       background: #eafaf0;
-      border: 1px solid #bfe5c5;
-      color: #0b6d2d;
-    }
-    .button-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      border: 1px solid #bfe7c6;
+      color: #0d6f2a;
     }
     .footer {
       text-align: center;
-      color: #999;
-      margin-top: 30px;
-      font-size: 11px;
-      border-top: 1px solid #ddd;
-      padding-top: 20px;
-    }
-    small {
-      display: block;
-      color: #777;
       font-size: 12px;
-      margin-top: 4px;
+      color: #777;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>⚙️ Axvyn</h1>
-    <p class="subtitle">Free Online File and Media Tools</p>
-    <p class="info">All tools work in your browser. No files are uploaded anywhere except SRT translation, which uses the backend.</p>
+    <h1>Axvyn SRT Translator</h1>
+    <p class="subtitle">Free translation using LibreTranslate</p>
 
-    <!-- Docx to PDF -->
-    <div class="card">
-      <div class="card-header">📄 Word (.docx) to PDF</div>
-      <div class="card-body">
-        <label>Select Word file</label>
-        <input id="docxFile" type="file" accept=".docx" />
+    <label for="srtFile">Select SRT file</label>
+    <input id="srtFile" type="file" accept=".srt" />
 
-        <button type="button" onclick="convertDocxToPdf()">Convert &amp; Download PDF</button>
-        <div id="docxMsg" class="msg"></div>
-      </div>
-    </div>
+    <label for="sourceLanguage">Subtitle language</label>
+    <select id="sourceLanguage">
+      <option value="ar" selected>Arabic</option>
+      <option value="en">English</option>
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+      <option value="de">German</option>
+      <option value="pt">Portuguese</option>
+      <option value="ru">Russian</option>
+      <option value="zh">Chinese</option>
+      <option value="hi">Hindi</option>
+      <option value="ja">Japanese</option>
+      <option value="ko">Korean</option>
+      <option value="it">Italian</option>
+      <option value="nl">Dutch</option>
+      <option value="pl">Polish</option>
+      <option value="tr">Turkish</option>
+    </select>
 
-    <!-- Image Compressor -->
-    <div class="card">
-      <div class="card-header">🖼️ Image Compressor</div>
-      <div class="card-body">
-        <label>Select Image</label>
-        <input id="imgFile" type="file" accept="image/*" />
+    <label for="targetLanguage">Translate to</label>
+    <select id="targetLanguage">
+      <option value="en" selected>English</option>
+      <option value="ar">Arabic</option>
+      <option value="es">Spanish</option>
+      <option value="fr">French</option>
+      <option value="de">German</option>
+      <option value="pt">Portuguese</option>
+      <option value="ru">Russian</option>
+      <option value="zh">Chinese</option>
+      <option value="hi">Hindi</option>
+      <option value="ja">Japanese</option>
+      <option value="ko">Korean</option>
+      <option value="it">Italian</option>
+      <option value="nl">Dutch</option>
+      <option value="pl">Polish</option>
+      <option value="tr">Turkish</option>
+    </select>
 
-        <label>Quality</label>
-        <input id="imgQuality" type="range" min="0.1" max="1" step="0.1" value="0.7" />
-        <small>Quality: <span id="qualityValue">0.7</span></small>
+    <button id="translateBtn" type="button">Translate &amp; Download</button>
 
-        <button type="button" onclick="compressImg()">Compress &amp; Download</button>
-        <div id="imgMsg" class="msg"></div>
-      </div>
-    </div>
+    <div id="message" class="msg"></div>
 
-    <!-- TTS -->
-    <div class="card">
-      <div class="card-header">🔊 Text to Voice</div>
-      <div class="card-body">
-        <label>Enter text</label>
-        <textarea id="ttsText" placeholder="Type or paste text here"></textarea>
-        <small id="charCount">0 / 3000</small>
-
-        <label>Speech rate</label>
-        <input id="speechRate" type="range" min="0.5" max="2" step="0.1" value="1" />
-        <small>Speed: <span id="rateValue">1</span>x</small>
-
-        <label>Select voice</label>
-        <select id="voiceLanguage">
-          <option value="en-US">English (US)</option>
-          <option value="en-GB">English (UK)</option>
-          <option value="en-AU">English (AU)</option>
-          <option value="ar">Arabic</option>
-          <option value="fr-FR">French</option>
-          <option value="de-DE">German</option>
-          <option value="es-ES">Spanish</option>
-          <option value="it-IT">Italian</option>
-          <option value="pt-BR">Portuguese</option>
-          <option value="ru-RU">Russian</option>
-          <option value="ja-JP">Japanese</option>
-          <option value="ko-KR">Korean</option>
-          <option value="hi-IN">Hindi</option>
-        </select>
-
-        <div class="button-row">
-          <button type="button" class="success" onclick="playVoice()">▶️ Play</button>
-          <button type="button" class="danger" onclick="stopVoice()">⏹️ Stop</button>
-        </div>
-
-        <div id="ttsMsg" class="msg"></div>
-      </div>
-    </div>
-
-    <!-- SRT Translator -->
-    <div class="card">
-      <div class="card-header">📝 Translate SRT Subtitles</div>
-      <div class="card-body">
-        <label>Select SRT file</label>
-        <input id="srtFile" type="file" accept=".srt" />
-
-        <label>Subtitle language</label>
-        <select id="sourceLanguage">
-          <option value="ar" selected>Arabic</option>
-          <option value="en">English</option>
-          <option value="es">Spanish</option>
-          <option value="fr">French</option>
-          <option value="de">German</option>
-          <option value="pt">Portuguese</option>
-          <option value="ru">Russian</option>
-          <option value="zh-CN">Chinese</option>
-          <option value="hi">Hindi</option>
-          <option value="ja">Japanese</option>
-          <option value="ko">Korean</option>
-          <option value="it">Italian</option>
-          <option value="nl">Dutch</option>
-          <option value="pl">Polish</option>
-          <option value="tr">Turkish</option>
-        </select>
-
-        <label>Translate to</label>
-        <select id="targetLanguage">
-          <option value="en" selected>English</option>
-          <option value="ar">Arabic</option>
-          <option value="es">Spanish</option>
-          <option value="fr">French</option>
-          <option value="de">German</option>
-          <option value="pt">Portuguese</option>
-          <option value="ru">Russian</option>
-          <option value="zh-CN">Chinese</option>
-          <option value="hi">Hindi</option>
-          <option value="ja">Japanese</option>
-          <option value="ko">Korean</option>
-          <option value="it">Italian</option>
-          <option value="nl">Dutch</option>
-          <option value="pl">Polish</option>
-          <option value="tr">Turkish</option>
-        </select>
-
-        <button type="button" id="translateSrtBtn" onclick="translateSrt()">Translate &amp; Download</button>
-        <div id="srtMsg" class="msg"></div>
-      </div>
-    </div>
-
-    <!-- YouTube Subtitles -->
-    <div class="card">
-      <div class="card-header">🎥 Download YouTube Subtitles</div>
-      <div class="card-body">
-        <label>YouTube URL</label>
-        <input id="ytUrl" type="text" placeholder="https://www.youtube.com/watch?v=..." />
-
-        <label>Language</label>
-        <select id="ytLang">
-          <option value="auto">Auto</option>
-          <option value="en">English</option>
-          <option value="es">Spanish</option>
-          <option value="fr">French</option>
-          <option value="de">German</option>
-          <option value="ar">Arabic</option>
-          <option value="pt">Portuguese</option>
-          <option value="ru">Russian</option>
-          <option value="ja">Japanese</option>
-          <option value="ko">Korean</option>
-        </select>
-
-        <button type="button" onclick="downloadYtSubs()">Fetch &amp; Download SRT</button>
-        <div id="ytMsg" class="msg"></div>
-      </div>
-    </div>
-
-    <div class="footer">
-      © 2024 Axvyn
-    </div>
+    <div class="footer">© 2024 Axvyn</div>
   </div>
 
   <script>
-    function showMessage(id, text, isError) {
-      const el = document.getElementById(id);
-      el.textContent = text;
-      el.className = 'msg show ' + (isError ? 'error' : 'success');
+    const button = document.getElementById('translateBtn');
+    const msg = document.getElementById('message');
+
+    function showMessage(text, isError) {
+      msg.textContent = text;
+      msg.className = 'msg show ' + (isError ? 'error' : 'success');
     }
 
-    function bytesToMB(bytes) {
-      return (bytes / 1048576).toFixed(2);
+    function setBusy(isBusy) {
+      button.disabled = isBusy;
+      button.textContent = isBusy ? 'Translating...' : 'Translate & Download';
     }
 
-    // DOCX to PDF
-    function convertDocxToPdf() {
-      const file = document.getElementById('docxFile').files[0];
-      const msg = 'docxMsg';
-
-      if (!file) {
-        showMessage(msg, 'Select a Word file first.', true);
-        return;
-      }
-
-      if (!file.name.toLowerCase().endsWith('.docx')) {
-        showMessage(msg, 'Please choose a valid .docx file.', true);
-        return;
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        showMessage(msg, 'File exceeds 5 MB.', true);
-        return;
-      }
-
-      if (typeof mammoth === 'undefined') {
-        showMessage(msg, 'The Word converter is still loading. Try again in a moment.', true);
-        return;
-      }
-
-      if (typeof html2pdf === 'undefined') {
-        showMessage(msg, 'The PDF converter is unavailable.', true);
-        return;
-      }
-
-      showMessage(msg, 'Converting...', false);
-
-      const reader = new FileReader();
-      reader.onload = function (event) {
-        mammoth.convertToHtml({ arrayBuffer: event.target.result })
-          .then(function (result) {
-            const element = document.createElement('div');
-            element.innerHTML = result.value;
-
-            const options = {
-              margin: 10,
-              filename: file.name.replace(/\.docx$/i, '') + '.pdf',
-              image: { type: 'jpeg', quality: 0.98 },
-              html2canvas: { scale: 2 },
-              jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-            };
-
-            return html2pdf().set(options).from(element).save();
-          })
-          .then(function () {
-            showMessage(msg, 'PDF downloaded.', false);
-          })
-          .catch(function (error) {
-            showMessage(msg, 'Conversion failed: ' + error.message, true);
-          });
-      };
-      reader.readAsArrayBuffer(file);
-    }
-
-    // Image Compressor
-    document.getElementById('imgQuality').addEventListener('input', function () {
-      document.getElementById('qualityValue').textContent = this.value;
-    });
-
-    function compressImg() {
-      const file = document.getElementById('imgFile').files[0];
-      const msg = 'imgMsg';
-
-      if (!file) {
-        showMessage(msg, 'Select an image first.', true);
-        return;
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        showMessage(msg, 'File exceeds 5 MB.', true);
-        return;
-      }
-
-      const quality = parseFloat(document.getElementById('imgQuality').value);
-      const img = new Image();
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      showMessage(msg, 'Compressing...', false);
-
-      img.onload = function () {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-
-        canvas.toBlob(function (blob) {
-          if (!blob) {
-            showMessage(msg, 'Compression failed.', true);
-            return;
-          }
-
-          const a = document.createElement('a');
-          const url = URL.createObjectURL(blob);
-          a.href = url;
-          a.download = 'compressed_' + file.name;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          URL.revokeObjectURL(url);
-
-          showMessage(msg, 'Image downloaded.', false);
-        }, 'image/jpeg', quality);
-      };
-
-      img.onerror = function () {
-        showMessage(msg, 'Could not read this image.', true);
-      };
-
-      img.src = URL.createObjectURL(file);
-    }
-
-    // TTS
-    let speechUtterance = null;
-
-    document.getElementById('ttsText').addEventListener('input', function () {
-      const count = this.value.length;
-      document.getElementById('charCount').textContent = count + ' / 3000';
-    });
-
-    document.getElementById('speechRate').addEventListener('input', function () {
-      document.getElementById('rateValue').textContent = this.value;
-    });
-
-    function playVoice() {
-      const text = document.getElementById('ttsText').value.trim();
-      const lang = document.getElementById('voiceLanguage').value;
-      const rate = parseFloat(document.getElementById('speechRate').value);
-
-      if (!text) {
-        showMessage('ttsMsg', 'Enter some text first.', true);
-        return;
-      }
-
-      if (text.length > 3000) {
-        showMessage('ttsMsg', 'Maximum 3000 characters.', true);
-        return;
-      }
-
-      if (!('speechSynthesis' in window)) {
-        showMessage('ttsMsg', 'Speech is not supported in this browser.', true);
-        return;
-      }
-
-      stopVoice();
-
-      speechUtterance = new SpeechSynthesisUtterance(text);
-      speechUtterance.lang = lang;
-      speechUtterance.rate = rate;
-
-      showMessage('ttsMsg', 'Playing...', false);
-      window.speechSynthesis.speak(speechUtterance);
-    }
-
-    function stopVoice() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-    }
-
-    // SRT translation
     async function translateSrt() {
       const file = document.getElementById('srtFile').files[0];
-      const msg = 'srtMsg';
 
       if (!file) {
-        showMessage(msg, 'Select an SRT file first.', true);
+        showMessage('Please choose an SRT file first.', true);
         return;
       }
 
       if (!file.name.toLowerCase().endsWith('.srt')) {
-        showMessage(msg, 'Please select a valid .srt file.', true);
+        showMessage('Please choose a valid .srt file.', true);
         return;
       }
 
       if (file.size > 5 * 1024 * 1024) {
-        showMessage(msg, 'File exceeds 5 MB.', true);
+        showMessage('The maximum file size is 5 MB.', true);
         return;
       }
 
@@ -480,7 +176,7 @@
       const targetLanguage = document.getElementById('targetLanguage').value;
 
       if (sourceLanguage === targetLanguage) {
-        showMessage(msg, 'Choose different source and target languages.', true);
+        showMessage('Choose different source and target languages.', true);
         return;
       }
 
@@ -489,10 +185,8 @@
       formData.append('sourceLanguage', sourceLanguage);
       formData.append('targetLanguage', targetLanguage);
 
-      const button = document.getElementById('translateSrtBtn');
-      button.disabled = true;
-      button.textContent = 'Translating...';
-      showMessage(msg, 'Uploading and translating...', false);
+      setBusy(true);
+      showMessage('Uploading and translating...', false);
 
       try {
         const response = await fetch('/api/translate-srt', {
@@ -506,10 +200,15 @@
         }
 
         const blob = await response.blob();
+
+        const contentDisposition = response.headers.get('content-disposition') || '';
+        let filename = file.name.replace(/\.srt$/i, '') + '_' + targetLanguage + '.srt';
+
+        const match = contentDisposition.match(/filename="([^"]+)"/);
+        if (match) filename = match[1];
+
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-
-        const filename = file.name.replace(/\.srt$/i, '') + '_' + targetLanguage + '.srt';
 
         a.href = url;
         a.download = filename;
@@ -518,62 +217,16 @@
         a.remove();
         URL.revokeObjectURL(url);
 
-        showMessage(msg, 'Translation complete. File downloaded.', false);
+        showMessage('Translation complete. Downloaded ' + filename, false);
       } catch (error) {
-        showMessage(msg, error.message || 'Translation failed.', true);
+        console.error(error);
+        showMessage(error.message || 'Translation failed.', true);
       } finally {
-        button.disabled = false;
-        button.textContent = 'Translate & Download';
+        setBusy(false);
       }
     }
 
-    // YouTube subtitles
-    async function downloadYtSubs() {
-      const url = document.getElementById('ytUrl').value.trim();
-      const lang = document.getElementById('ytLang').value;
-      const msg = 'ytMsg';
-
-      if (!url) {
-        showMessage(msg, 'Paste a YouTube URL first.', true);
-        return;
-      }
-
-      showMessage(msg, 'Fetching subtitles...', false);
-
-      try {
-        const response = await fetch('/api/youtube-subtitles?url=' + encodeURIComponent(url) + '&lang=' + encodeURIComponent(lang));
-        if (!response.ok) {
-          const data = await response.json().catch(() => ({}));
-          throw new Error(data.error || 'Could not download subtitles.');
-        }
-
-        const blob = await response.blob();
-        const urlObj = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-
-        let filename = 'youtube_subtitles_' + lang + '.srt';
-        const contentDisposition = response.headers.get('content-disposition') || '';
-        const match = contentDisposition.match(/filename="([^"]+)"/);
-
-        if (match) {
-          filename = match[1];
-        }
-
-        a.href = urlObj;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(urlObj);
-
-        showMessage(msg, 'SRT downloaded.', false);
-      } catch (error) {
-        showMessage(msg, error.message || 'Failed to fetch subtitles.', true);
-      }
-    }
+    document.getElementById('translateBtn').addEventListener('click', translateSrt);
   </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 </body>
 </html>
