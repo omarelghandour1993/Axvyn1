@@ -1,38 +1,13 @@
-async function translateText(text, sourceLanguage, targetLanguage) {
-  const response = await fetch(
-    'https://libretranslate.com/translate',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        q: text,
-        source: sourceLanguage,
-        target: targetLanguage,
-        format: 'text'
-      })
-    }
-  );
-
-  if (!response.ok) {
-    const errorText = await response.text();
-
-    throw new Error(
-      'LibreTranslate failed: HTTP ' +
-      response.status +
-      ' ' +
-      errorText
-    );
+{
+  "name": "axvyn-libretranslate",
+  "version": "1.0.0",
+  "description": "Axvyn SRT translator using LibreTranslate",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "multer": "^1.4.5-lts.1"
   }
-
-  const data = await response.json();
-
-  if (!data.translatedText) {
-    throw new Error(
-      'LibreTranslate returned no translated text.'
-    );
-  }
-
-  return data.translatedText;
 }
