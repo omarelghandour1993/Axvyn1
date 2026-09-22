@@ -133,7 +133,7 @@
       <option value="tr">Turkish</option>
     </select>
 
-    <button id="translateBtn" type="button">Translate &amp; Download</button>
+    <button id="translateBtn" type="button">Translate & Download</button>
 
     <div id="message" class="msg"></div>
 
@@ -200,12 +200,13 @@
         }
 
         const blob = await response.blob();
-
         const contentDisposition = response.headers.get('content-disposition') || '';
         let filename = file.name.replace(/\.srt$/i, '') + '_' + targetLanguage + '.srt';
-
         const match = contentDisposition.match(/filename="([^"]+)"/);
-        if (match) filename = match[1];
+
+        if (match) {
+          filename = match[1];
+        }
 
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
