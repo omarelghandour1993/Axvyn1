@@ -1,11 +1,6 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
-const dotenv = require('dotenv');
-const { Translate } = require('@google-cloud/translate').v2;
-
-dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,35 +12,10 @@ const upload = multer({
   },
   fileFilter: function (req, file, cb) {
     if (!file.originalname.toLowerCase().endsWith('.srt')) {
-      return cb(new Error('Only .srt files are allowed'));
+      return cb(new Error('Only .srt files are allowed.'));
     }
     cb(null, true);
   }
-});
-
-function setupGoogleCredentials() {
-  const json = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON;
-
-  if (!json) {
-    throw new Error(
-      'Missing GOOGLE_APPLICATION_CREDENTIALS_JSON. ' +
-      'Add the JSON contents of your Google service account in Render env vars.'
-    );
-  }
-
-  const credentialsPath = path.join(__dirname, 'tmp-google-creds.json');
-  fs.writeFileSync(credentialsPath, json, 'utf8');
-  process.env.GOOGLE_APPLICATION_CREDENTIALS = credentialsPath;
-}
-
-try {
-  setupGoogleCredentials();
-} catch (error) {
-  console.error('Google setup error:', error.message);
-}
-
-const translate = new Translate({
-  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS
 });
 
 function parseSrt(content) {
@@ -91,19 +61,63 @@ function buildSrt(subtitles) {
     .join('\n\n') + '\n\n';
 }
 
-async function translateBatch(subtitles, sourceLanguage, targetLanguage) {
-  const texts = subtitles.map((item) => item.text);
+async function translateText(text, sourceLanguage, targetLanguage) {
+  const url = 'https://libretranslate.com/translate';
 
-  const [response] = await translate.translate(texts, {
-    from: sourceLanguage,
-    to: targetLanguage
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      q: text,
+      source: sourceLanguage,
+      target: targetLanguage,
+      format: 'text'
+    })
   });
 
-  return subtitles.map((subtitle, index) => ({
-    number: subtitle.number,
-    timing: subtitle.timing,
-    text: response[index]
-  }));
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error('LibreTranslate failed: ' + response.status + ' ' + errorText);
+  }
+
+  const data = await response.json();
+
+  if (!data.translatedText) {
+    throw new Error('LibreTranslate returned no translated text.');
+  }
+
+  return data.translatedText;
+}
+
+async function translateSrtFile(fileBuffer, sourceLanguage, targetLanguage) {
+  const content = fileBuffer.toString('utf8');
+  const subtitles = parseSrt(content);
+
+  if (!subtitles.length) {
+    throw new Error('No valid subtitle blocks were found in the SRT file.');
+  }
+
+  const translatedSubtitles = [];
+
+  for (let i = 0; i < subtitles.length; i++) {
+    const subtitle = subtitles[i];
+
+    const translatedText = await translateText(
+      subtitle.text,
+      sourceLanguage,
+      targetLanguage
+    );
+
+    translatedSubtitles.push({
+      number: subtitle.number,
+      timing: subtitle.timing,
+      text: translatedText
+    });
+  }
+
+  return buildSrt(translatedSubtitles);
 }
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -115,13 +129,11 @@ app.get('/', function (req, res) {
 app.post('/api/translate-srt', upload.single('srtFile'), async function (req, res) {
   try {
     if (!req.file) {
-      return res.status(400).json({
-        error: 'Please upload an .srt file.'
-      });
+      return res.status(400).json({ error: 'Please upload an SRT file.' });
     }
 
-    const sourceLanguage = String(req.body.sourceLanguage || '').trim();
-    const targetLanguage = String(req.body.targetLanguage || '').trim();
+    const sourceLanguage = (req.body.sourceLanguage || '').trim();
+    const targetLanguage = (req.body.targetLanguage || '').trim();
 
     if (!sourceLanguage || !targetLanguage) {
       return res.status(400).json({
@@ -135,22 +147,11 @@ app.post('/api/translate-srt', upload.single('srtFile'), async function (req, re
       });
     }
 
-    const content = req.file.buffer.toString('utf8');
-    const subtitles = parseSrt(content);
-
-    if (!subtitles.length) {
-      return res.status(400).json({
-        error: 'No valid subtitle blocks were found in the SRT file.'
-      });
-    }
-
-    const translatedSubtitles = await translateBatch(
-      subtitles,
+    const outputSrt = await translateSrtFile(
+      req.file.buffer,
       sourceLanguage,
       targetLanguage
     );
-
-    const translatedSrt = buildSrt(translatedSubtitles);
 
     const originalName = path.basename(
       req.file.originalname,
@@ -161,74 +162,11 @@ app.post('/api/translate-srt', upload.single('srtFile'), async function (req, re
 
     res.setHeader('Content-Type', 'application/x-subrip; charset=utf-8');
     res.setHeader('Content-Disposition', `attachment; filename="${outputName}"`);
-    return res.send(translatedSrt);
+    return res.send(outputSrt);
   } catch (error) {
-    console.error('SRT translation failed:', error);
+    console.error('Translation error:', error);
     return res.status(500).json({
       error: error.message || 'Translation failed.'
-    });
-  }
-});
-
-app.get('/api/youtube-subtitles', async function (req, res) {
-  try {
-    const videoUrl = String(req.query.url || '').trim();
-    const lang = String(req.query.lang || 'auto').trim();
-
-    if (!videoUrl) {
-      return res.status(400).json({ error: 'Missing YouTube URL' });
-    }
-
-    let videoId = null;
-
-    try {
-      const parsed = new URL(videoUrl);
-      if (parsed.hostname.includes('youtu.be')) {
-        videoId = parsed.pathname.replace('/', '');
-      } else {
-        videoId = parsed.searchParams.get('v');
-      }
-    } catch (e) {
-      return res.status(400).json({ error: 'Invalid YouTube URL' });
-    }
-
-    if (!videoId) {
-      return res.status(400).json({ error: 'Could not find video ID' });
-    }
-
-    const apiUrl =
-      'https://youtubetranscript.com/?server_vid2=' +
-      encodeURIComponent(videoId) +
-      '&lang=' +
-      encodeURIComponent(lang);
-
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-      return res.status(400).json({
-        error: 'Could not fetch subtitles from the video.'
-      });
-    }
-
-    const text = await response.text();
-
-    if (!text || !text.includes('-->')) {
-      return res.status(404).json({
-        error: 'No subtitles found for this video and language.'
-      });
-    }
-
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-    res.setHeader(
-      'Content-Disposition',
-      `attachment; filename="${videoId}_${lang}.srt"`
-    );
-
-    return res.send(text);
-  } catch (error) {
-    console.error('YouTube subtitles error:', error);
-    return res.status(500).json({
-      error: 'Failed to fetch YouTube subtitles.'
     });
   }
 });
@@ -246,5 +184,5 @@ app.use(function (error, req, res, next) {
 });
 
 app.listen(port, function () {
-  console.log('Axvyn server running on port ' + port);
+  console.log('Axvyn LibreTranslate server running at http://localhost:' + port);
 });
