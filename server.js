@@ -103,7 +103,6 @@ async function translateSrtFile(fileBuffer, sourceLanguage, targetLanguage) {
 
   for (let i = 0; i < subtitles.length; i++) {
     const subtitle = subtitles[i];
-
     const translatedText = await translateText(
       subtitle.text,
       sourceLanguage,
@@ -136,15 +135,11 @@ app.post('/api/translate-srt', upload.single('srtFile'), async function (req, re
     const targetLanguage = (req.body.targetLanguage || '').trim();
 
     if (!sourceLanguage || !targetLanguage) {
-      return res.status(400).json({
-        error: 'Source and target languages are required.'
-      });
+      return res.status(400).json({ error: 'Language selection is required.' });
     }
 
     if (sourceLanguage === targetLanguage) {
-      return res.status(400).json({
-        error: 'Source and target languages must be different.'
-      });
+      return res.status(400).json({ error: 'Source and target languages must be different.' });
     }
 
     const outputSrt = await translateSrtFile(
@@ -175,11 +170,9 @@ app.use(function (error, req, res, next) {
   if (error instanceof multer.MulterError) {
     return res.status(400).json({ error: error.message });
   }
-
   if (error) {
     return res.status(400).json({ error: error.message });
   }
-
   next();
 });
 
