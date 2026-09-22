@@ -62,20 +62,18 @@ function buildSrt(subtitles) {
 }
 
 async function translateText(text, sourceLanguage, targetLanguage) {
-  const url = 'https://libretranslate.com/translate';
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      q: text,
-      source: sourceLanguage,
-      target: targetLanguage,
-      format: 'text'
-    })
-  });
+const response = await fetch('https://libretranslate.com/translate', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    q: text,
+    source: sourceLanguage,
+    target: targetLanguage,
+    format: 'text'
+  })
+});
 
   if (!response.ok) {
     const errorText = await response.text();
