@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Donate - Axvyn</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f5f5f5;
+      color: #333;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+      padding: 20px;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+      margin: 0 auto;
+      max-width: 700px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .back {
+      background: #007bff;
+      border-radius: 4px;
+      color: #fff;
+      display: inline-block;
+      margin-bottom: 30px;
+      padding: 10px 16px;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      background: #0056b3;
+    }
+
+    h1 {
+      color: #222;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #777;
+      margin-bottom: 25px;
+    }
+
+    .donation-box {
+      background: #f8f9fa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-top: 25px;
+      padding: 25px;
+    }
+
+    .donation-box h2 {
+      color: #222;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .donation-box p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    #paypal-container-NNE6YGULSGY5E {
+      margin: 0 auto;
+      max-width: 450px;
+      min-height: 45px;
+    }
+
+    .footer {
+      border-top: 1px solid #ddd;
+      color: #999;
+      font-size: 12px;
+      margin-top: 35px;
+      padding-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <a class="back" href="index.html">← Back to Axvyn</a>
+
+    <h1>Support Axvyn</h1>
+
+    <p class="subtitle">
+      Your support helps us maintain and improve Axvyn's free online tools.
+    </p>
+
+    <section class="donation-box">
+      <h2>Make a Donation</h2>
+
+      <p>
+        Thank you for supporting Axvyn. Every contribution helps keep the
+        website available and supports future improvements.
+      </p>
+
+      <div id="paypal-container-NNE6YGULSGY5E"></div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2026 Axvyn. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <!-- PayPal Hosted Buttons SDK -->
+  <script
+    src="https://www.paypal.com/sdk/js?client-id=BAAC7Zw-n-I3GY-Nuc7Zcy8fp3MuoYpmPe-Zs4zjwel39Nj1i1up00FWOJIgwfG1pR5A_ekVPayRxlqvZY&components=hosted-buttons&disable-funding=venmo&currency=USD">
+  </script>
+
+  <!-- PayPal donation button -->
+  <script>
+    paypal.HostedButtons({
+      hostedButtonId: "NNE6YGULSGY5E"
+    }).render("#paypal-container-NNE6YGULSGY5E");
+  </script>
+</body>
+</html>
