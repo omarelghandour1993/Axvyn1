@@ -1,13 +1,12 @@
 {
-  "name": "axvyn-libretranslate",
+  "name": "axvyn-tools",
   "version": "1.0.0",
-  "description": "Axvyn SRT translator using LibreTranslate",
+  "description": "Axvyn free online tools",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.21.1",
-    "multer": "^1.4.5-lts.1"
+    "express": "^4.21.1"
   }
 }
