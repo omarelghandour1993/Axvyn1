@@ -22,7 +22,7 @@
     .container {
       background: #fff;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
       margin: 0 auto;
       max-width: 900px;
       padding: 30px;
@@ -59,7 +59,6 @@
     .card-header {
       background: #f0f0f0;
       border-bottom: 1px solid #ddd;
-      color: #333;
       font-weight: bold;
       padding: 15px;
     }
@@ -72,8 +71,7 @@
       display: block;
       font-size: 13px;
       font-weight: bold;
-      margin-bottom: 6px;
-      margin-top: 15px;
+      margin: 15px 0 6px;
     }
 
     input,
@@ -89,13 +87,13 @@
       width: 100%;
     }
 
-    input[type="range"] {
-      padding: 0;
-    }
-
     textarea {
       min-height: 110px;
       resize: vertical;
+    }
+
+    input[type="range"] {
+      padding: 0;
     }
 
     small {
@@ -123,7 +121,7 @@
 
     button:disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: .6;
     }
 
     button.success {
@@ -180,6 +178,16 @@
       color: #087508;
     }
 
+    .audio-player {
+      display: none;
+      margin-top: 15px;
+      width: 100%;
+    }
+
+    .audio-player.show {
+      display: block;
+    }
+
     .footer {
       border-top: 1px solid #ddd;
       color: #999;
@@ -214,29 +222,20 @@
     <h1>⚙️ Axvyn</h1>
     <p class="subtitle">Free Online File and Media Tools</p>
     <p class="info">
-      Your files are processed in your browser whenever possible.
+      Files are processed in your browser whenever possible.
     </p>
 
     <!-- Tool 1: Word to PDF -->
     <section class="card">
-      <div class="card-header">
-        📄 Word (.docx) to PDF
-      </div>
+      <div class="card-header">📄 Word (.docx) to PDF</div>
 
       <div class="card-body">
         <label for="docxFile">Select Word File:</label>
-        <input
-          id="docxFile"
-          type="file"
-          accept=".docx"
-        >
+        <input id="docxFile" type="file" accept=".docx">
 
         <small>Maximum file size: 5 MB.</small>
 
-        <button
-          type="button"
-          onclick="convertDocxToPdf()"
-        >
+        <button type="button" onclick="convertDocxToPdf()">
           Convert &amp; Download PDF
         </button>
 
@@ -246,17 +245,11 @@
 
     <!-- Tool 2: Image Compressor -->
     <section class="card">
-      <div class="card-header">
-        🖼️ Image Compressor
-      </div>
+      <div class="card-header">🖼️ Image Compressor</div>
 
       <div class="card-body">
         <label for="imgFile">Select Image:</label>
-        <input
-          id="imgFile"
-          type="file"
-          accept="image/*"
-        >
+        <input id="imgFile" type="file" accept="image/*">
 
         <small>Maximum file size: 20 MB.</small>
 
@@ -274,10 +267,7 @@
           Quality: <span id="qualityValue">0.7</span>
         </small>
 
-        <button
-          type="button"
-          onclick="compressImage()"
-        >
+        <button type="button" onclick="compressImage()">
           Compress &amp; Download
         </button>
 
@@ -287,9 +277,7 @@
 
     <!-- Tool 3: Text to Speech -->
     <section class="card">
-      <div class="card-header">
-        🔊 Text to Voice
-      </div>
+      <div class="card-header">🔊 Text to Voice</div>
 
       <div class="card-body">
         <label for="ttsText">Enter Text:</label>
@@ -299,9 +287,7 @@
           placeholder="Type or paste text here"
         ></textarea>
 
-        <small id="charCount">
-          0 / 3000
-        </small>
+        <small id="charCount">0 / 3000</small>
 
         <label for="speechRate">Speech Rate:</label>
         <input
@@ -322,7 +308,7 @@
           <option value="en-US">English US</option>
           <option value="en-GB">English UK</option>
           <option value="en-AU">English Australia</option>
-          <option value="ar-SA">Arabic</option>
+          <option value="ar">Arabic</option>
           <option value="es-ES">Spanish</option>
           <option value="fr-FR">French</option>
           <option value="de-DE">German</option>
@@ -339,19 +325,33 @@
           <button
             type="button"
             class="success"
-            onclick="playVoice()"
+            onclick="playTextToSpeech()"
           >
             ▶️ Play Voice
           </button>
 
           <button
             type="button"
+            class="secondary"
+            onclick="generateSpeechAudio()"
+          >
+            🎵 Create Audio
+          </button>
+
+          <button
+            type="button"
             class="danger"
-            onclick="stopVoice()"
+            onclick="stopTextToSpeech()"
           >
             ⏹️ Stop
           </button>
         </div>
+
+        <audio
+          id="speechAudioPlayer"
+          class="audio-player"
+          controls
+        ></audio>
 
         <div id="ttsMsg" class="msg"></div>
       </div>
@@ -359,9 +359,7 @@
 
     <!-- Tool 4: WEBP and AVIF to PNG -->
     <section class="card">
-      <div class="card-header">
-        🔄 WEBP / AVIF to PNG Converter
-      </div>
+      <div class="card-header">🔄 WEBP / AVIF to PNG Converter</div>
 
       <div class="card-body">
         <label for="convertImageFile">
@@ -390,65 +388,19 @@
       </div>
     </section>
 
-    <!-- Tool 5: YouTube Subtitle Downloader -->
-    <section class="card">
-      <div class="card-header">
-        🎥 Download YouTube Subtitles
-      </div>
-
-      <div class="card-body">
-        <label for="ytUrl">YouTube Video URL:</label>
-
-        <input
-          id="ytUrl"
-          type="url"
-          placeholder="https://www.youtube.com/watch?v=..."
-        >
-
-        <label for="ytLang">Language:</label>
-
-        <select id="ytLang">
-          <option value="auto">Auto</option>
-          <option value="en">English</option>
-          <option value="ar">Arabic</option>
-          <option value="es">Spanish</option>
-          <option value="fr">French</option>
-          <option value="de">German</option>
-          <option value="pt">Portuguese</option>
-          <option value="ru">Russian</option>
-          <option value="ja">Japanese</option>
-          <option value="ko">Korean</option>
-          <option value="it">Italian</option>
-          <option value="nl">Dutch</option>
-          <option value="pl">Polish</option>
-          <option value="tr">Turkish</option>
-        </select>
-
-        <button
-          type="button"
-          onclick="downloadYouTubeSubtitles()"
-        >
-          Fetch &amp; Download SRT
-        </button>
-
-        <div id="ytMsg" class="msg"></div>
-      </div>
-    </section>
-
     <footer class="footer">
       <p>© 2024 Axvyn. All tools work in your browser.</p>
     </footer>
   </main>
 
-  <!-- Required libraries -->
+  <!-- DOCX conversion libraries -->
   <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
-  <script>
-    /*
-     * General helper functions
-     */
+  <!-- Browser audio generation library -->
+  <script src="https://js.puter.com/v2/"></script>
 
+  <script>
     function showMsg(elementId, text, isError) {
       const element = document.getElementById(elementId);
 
@@ -459,12 +411,9 @@
       element.textContent = text;
       element.classList.add('show');
       element.classList.remove('error', 'success-msg');
-
-      if (isError) {
-        element.classList.add('error');
-      } else {
-        element.classList.add('success-msg');
-      }
+      element.classList.add(
+        isError ? 'error' : 'success-msg'
+      );
     }
 
     function downloadFile(blob, filename) {
@@ -487,12 +436,14 @@
     }
 
     /*
-     * Tool 1: Word to PDF
+     * Tool 1: DOCX to PDF
      */
 
     function convertDocxToPdf() {
-      const fileInput = document.getElementById('docxFile');
-      const file = fileInput.files[0];
+      const file = document
+        .getElementById('docxFile')
+        .files[0];
+
       const messageId = 'docxMsg';
 
       if (!file) {
@@ -501,7 +452,11 @@
       }
 
       if (!file.name.toLowerCase().endsWith('.docx')) {
-        showMsg(messageId, 'Please select a valid .docx file.', true);
+        showMsg(
+          messageId,
+          'Please select a valid .docx file.',
+          true
+        );
         return;
       }
 
@@ -518,7 +473,7 @@
       if (typeof window.mammoth === 'undefined') {
         showMsg(
           messageId,
-          'The Word conversion library could not load. Reload the page and try again.',
+          'The Word conversion library could not load.',
           true
         );
         return;
@@ -527,7 +482,7 @@
       if (typeof window.html2pdf === 'undefined') {
         showMsg(
           messageId,
-          'The PDF conversion library could not load. Reload the page and try again.',
+          'The PDF conversion library could not load.',
           true
         );
         return;
@@ -545,15 +500,18 @@
           .then(function(result) {
             const element = document.createElement('div');
 
-            element.style.background = '#ffffff';
-            element.style.color = '#000000';
+            element.style.background = '#fff';
+            element.style.color = '#000';
             element.style.fontFamily = 'Arial, sans-serif';
             element.style.padding = '20px';
             element.innerHTML = result.value;
 
             const options = {
               margin: 10,
-              filename: file.name.replace(/\.docx$/i, '') + '.pdf',
+              filename: file.name.replace(
+                /\.docx$/i,
+                ''
+              ) + '.pdf',
               image: {
                 type: 'jpeg',
                 quality: 0.98
@@ -582,8 +540,6 @@
             );
           })
           .catch(function(error) {
-            console.error('DOCX error:', error);
-
             showMsg(
               messageId,
               'Conversion failed: ' + error.message,
@@ -615,8 +571,10 @@
       });
 
     function compressImage() {
-      const fileInput = document.getElementById('imgFile');
-      const file = fileInput.files[0];
+      const file = document
+        .getElementById('imgFile')
+        .files[0];
+
       const messageId = 'imgMsg';
 
       if (!file) {
@@ -627,7 +585,7 @@
       if (file.size > 20 * 1024 * 1024) {
         showMsg(
           messageId,
-          'File is larger than the 20 MB limit.',
+          'The image is larger than the 20 MB limit.',
           true
         );
         return;
@@ -647,36 +605,31 @@
       image.onload = function() {
         canvas.width = image.naturalWidth;
         canvas.height = image.naturalHeight;
-
         context.drawImage(image, 0, 0);
         URL.revokeObjectURL(imageUrl);
 
-        canvas.toBlob(
-          function(blob) {
-            if (!blob) {
-              showMsg(
-                messageId,
-                'Could not compress this image.',
-                true
-              );
-              return;
-            }
-
-            const outputName =
-              file.name.replace(/\.[^/.]+$/, '') +
-              '_compressed.jpg';
-
-            downloadFile(blob, outputName);
-
+        canvas.toBlob(function(blob) {
+          if (!blob) {
             showMsg(
               messageId,
-              'Compressed image downloaded successfully.',
-              false
+              'Could not compress this image.',
+              true
             );
-          },
-          'image/jpeg',
-          quality
-        );
+            return;
+          }
+
+          const outputName =
+            file.name.replace(/\.[^/.]+$/, '') +
+            '_compressed.jpg';
+
+          downloadFile(blob, outputName);
+
+          showMsg(
+            messageId,
+            'Compressed image downloaded.',
+            false
+          );
+        }, 'image/jpeg', quality);
       };
 
       image.onerror = function() {
@@ -694,7 +647,13 @@
 
     /*
      * Tool 3: Text to speech
+     *
+     * Play Voice uses the browser's speech engine.
+     * Create Audio uses Puter and creates a playable/downloadable file.
      */
+
+    let speechAudioUrl = null;
+    let browserSpeechActive = false;
 
     document
       .getElementById('ttsText')
@@ -710,7 +669,7 @@
           this.value;
       });
 
-    function playVoice() {
+    function getSpeechInput() {
       const text = document
         .getElementById('ttsText')
         .value
@@ -726,7 +685,7 @@
 
       if (!text) {
         showMsg('ttsMsg', 'Enter some text first.', true);
-        return;
+        return null;
       }
 
       if (text.length > 3000) {
@@ -735,36 +694,55 @@
           'Maximum length is 3000 characters.',
           true
         );
+        return null;
+      }
+
+      return {
+        text: text,
+        language: language,
+        rate: rate
+      };
+    }
+
+    function playTextToSpeech() {
+      const input = getSpeechInput();
+
+      if (!input) {
         return;
       }
 
       if (!('speechSynthesis' in window)) {
         showMsg(
           'ttsMsg',
-          'Text-to-speech is not supported by this browser.',
+          'Speech playback is not supported by this browser.',
           true
         );
         return;
       }
 
-      stopVoice();
+      stopTextToSpeech();
 
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = language;
-      utterance.rate = rate;
+      const utterance =
+        new SpeechSynthesisUtterance(input.text);
+
+      utterance.lang = input.language;
+      utterance.rate = input.rate;
+      browserSpeechActive = true;
 
       utterance.onstart = function() {
         showMsg('ttsMsg', 'Playing voice...', false);
       };
 
       utterance.onend = function() {
+        browserSpeechActive = false;
         showMsg('ttsMsg', 'Playback finished.', false);
       };
 
       utterance.onerror = function() {
+        browserSpeechActive = false;
         showMsg(
           'ttsMsg',
-          'Text-to-speech playback failed.',
+          'Browser voice playback failed.',
           true
         );
       };
@@ -772,12 +750,124 @@
       window.speechSynthesis.speak(utterance);
     }
 
-    function stopVoice() {
-      if ('speechSynthesis' in window) {
+    async function generateSpeechAudio() {
+      const input = getSpeechInput();
+
+      if (!input) {
+        return;
+      }
+
+      if (
+        typeof window.puter === 'undefined' ||
+        !window.puter.ai ||
+        typeof window.puter.ai.txt2speech !== 'function'
+      ) {
+        showMsg(
+          'ttsMsg',
+          'The downloadable audio service is unavailable. Reload the page and try again.',
+          true
+        );
+        return;
+      }
+
+      showMsg(
+        'ttsMsg',
+        'Creating downloadable audio...',
+        false
+      );
+
+      try {
+        stopTextToSpeech();
+
+        const audioElement =
+          await window.puter.ai.txt2speech(
+            input.text,
+            input.language
+          );
+
+        if (!audioElement || !audioElement.src) {
+          throw new Error(
+            'No audio file was returned.'
+          );
+        }
+
+        const player =
+          document.getElementById(
+            'speechAudioPlayer'
+          );
+
+        if (speechAudioUrl) {
+          URL.revokeObjectURL(speechAudioUrl);
+          speechAudioUrl = null;
+        }
+
+        const response = await fetch(
+          audioElement.src
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            'Could not retrieve the audio file.'
+          );
+        }
+
+        const audioBlob =
+          await response.blob();
+
+        speechAudioUrl =
+          URL.createObjectURL(audioBlob);
+
+        player.src = speechAudioUrl;
+        player.classList.add('show');
+        player.load();
+
+        const filename =
+          'axvyn_voice_' +
+          Date.now() +
+          '.mp3';
+
+        downloadFile(audioBlob, filename);
+
+        showMsg(
+          'ttsMsg',
+          'Audio created, playable, and downloaded as ' +
+          filename,
+          false
+        );
+      } catch (error) {
+        console.error(
+          'Audio generation error:',
+          error
+        );
+
+        showMsg(
+          'ttsMsg',
+          'Could not create downloadable audio: ' +
+          error.message,
+          true
+        );
+      }
+    }
+
+    function stopTextToSpeech() {
+      if (
+        'speechSynthesis' in window &&
+        browserSpeechActive
+      ) {
         window.speechSynthesis.cancel();
       }
 
-      showMsg('ttsMsg', 'Playback stopped.', false);
+      const player =
+        document.getElementById(
+          'speechAudioPlayer'
+        );
+
+      if (player && !player.paused) {
+        player.pause();
+        player.currentTime = 0;
+      }
+
+      browserSpeechActive = false;
     }
 
     /*
@@ -785,16 +875,14 @@
      */
 
     function convertToPng() {
-      const fileInput = document.getElementById(
-        'convertImageFile'
-      );
+      const file = document
+        .getElementById('convertImageFile')
+        .files[0];
 
-      const button = document.getElementById(
-        'convertImageButton'
-      );
+      const button = document
+        .getElementById('convertImageButton');
 
       const messageId = 'convertImageMsg';
-      const file = fileInput.files[0];
 
       if (!file) {
         showMsg(
@@ -805,15 +893,15 @@
         return;
       }
 
-      const fileName = file.name.toLowerCase();
+      const filename = file.name.toLowerCase();
 
-      const supportedFile =
-        fileName.endsWith('.webp') ||
-        fileName.endsWith('.avif') ||
+      const isSupported =
+        filename.endsWith('.webp') ||
+        filename.endsWith('.avif') ||
         file.type === 'image/webp' ||
         file.type === 'image/avif';
 
-      if (!supportedFile) {
+      if (!isSupported) {
         showMsg(
           messageId,
           'Please select a valid WEBP or AVIF image.',
@@ -845,8 +933,11 @@
 
       image.onload = function() {
         try {
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
+          const canvas =
+            document.createElement('canvas');
+
+          const context =
+            canvas.getContext('2d');
 
           if (!context) {
             throw new Error(
@@ -870,7 +961,8 @@
             URL.revokeObjectURL(imageUrl);
 
             button.disabled = false;
-            button.textContent = 'Convert & Download PNG';
+            button.textContent =
+              'Convert & Download PNG';
 
             if (!blob) {
               showMsg(
@@ -883,7 +975,8 @@
 
             const outputName = file.name
               .replace(/\.(webp|avif)$/i, '')
-              .replace(/[^a-z0-9_\- ]/gi, '_') + '.png';
+              .replace(/[^a-z0-9_\- ]/gi, '_') +
+              '.png';
 
             downloadFile(blob, outputName);
 
@@ -897,7 +990,8 @@
           URL.revokeObjectURL(imageUrl);
 
           button.disabled = false;
-          button.textContent = 'Convert & Download PNG';
+          button.textContent =
+            'Convert & Download PNG';
 
           showMsg(
             messageId,
@@ -911,7 +1005,8 @@
         URL.revokeObjectURL(imageUrl);
 
         button.disabled = false;
-        button.textContent = 'Convert & Download PNG';
+        button.textContent =
+          'Convert & Download PNG';
 
         showMsg(
           messageId,
@@ -921,126 +1016,6 @@
       };
 
       image.src = imageUrl;
-    }
-
-    /*
-     * Tool 5: YouTube subtitle downloader
-     *
-     * This uses the backend route if it still exists in server.js.
-     */
-
-    function getYouTubeVideoId(videoUrl) {
-      try {
-        const parsedUrl = new URL(videoUrl);
-
-        if (parsedUrl.hostname.includes('youtu.be')) {
-          return parsedUrl.pathname.replace('/', '');
-        }
-
-        return parsedUrl.searchParams.get('v');
-      } catch (error) {
-        return null;
-      }
-    }
-
-    async function downloadYouTubeSubtitles() {
-      const videoUrl = document
-        .getElementById('ytUrl')
-        .value
-        .trim();
-
-      const language = document
-        .getElementById('ytLang')
-        .value;
-
-      const messageId = 'ytMsg';
-
-      if (!videoUrl) {
-        showMsg(
-          messageId,
-          'Paste a YouTube URL first.',
-          true
-        );
-        return;
-      }
-
-      const videoId = getYouTubeVideoId(videoUrl);
-
-      if (!videoId) {
-        showMsg(
-          messageId,
-          'Invalid YouTube URL.',
-          true
-        );
-        return;
-      }
-
-      showMsg(
-        messageId,
-        'Fetching subtitles...',
-        false
-      );
-
-      try {
-        const requestUrl =
-          '/api/youtube-subtitles?url=' +
-          encodeURIComponent(videoUrl) +
-          '&lang=' +
-          encodeURIComponent(language);
-
-        const response = await fetch(requestUrl);
-
-        if (!response.ok) {
-          const data = await response
-            .json()
-            .catch(function() {
-              return {};
-            });
-
-          throw new Error(
-            data.error ||
-            'Could not download YouTube subtitles.'
-          );
-        }
-
-        const blob = await response.blob();
-
-        const contentDisposition =
-          response.headers.get(
-            'content-disposition'
-          ) || '';
-
-        let filename =
-          videoId + '_' + language + '.srt';
-
-        const match = contentDisposition.match(
-          /filename="([^"]+)"/
-        );
-
-        if (match) {
-          filename = match[1];
-        }
-
-        downloadFile(blob, filename);
-
-        showMsg(
-          messageId,
-          'Subtitles downloaded successfully.',
-          false
-        );
-      } catch (error) {
-        console.error(
-          'YouTube subtitle error:',
-          error
-        );
-
-        showMsg(
-          messageId,
-          error.message ||
-          'Could not download subtitles.',
-          true
-        );
-      }
     }
   </script>
 </body>
