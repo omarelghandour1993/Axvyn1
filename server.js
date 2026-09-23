@@ -14,8 +14,8 @@ app.get('/', function(req, res) {
   );
 });
 
-app.listen(port, function() {
+app.listen(port, '0.0.0.0', function() {
   console.log(
-    'Axvyn is running on port ' + port
+    'Axvyn is running at http://localhost:' + port
   );
 });
