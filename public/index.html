@@ -1,233 +1,1047 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Axvyn SRT Translator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Axvyn - Free Online Tools</title>
+
   <style>
-    * { box-sizing: border-box; }
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, sans-serif;
+      padding: 0;
+    }
+
+    body {
       background: #f5f5f5;
-      color: #222;
+      color: #333;
+      font-family: Arial, sans-serif;
       padding: 20px;
     }
+
     .container {
-      max-width: 800px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       margin: 0 auto;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      max-width: 900px;
       padding: 30px;
     }
+
     h1 {
-      text-align: center;
+      color: #333;
+      font-size: 30px;
       margin-bottom: 10px;
-    }
-    .subtitle {
       text-align: center;
-      color: #666;
-      margin-bottom: 25px;
     }
+
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .info {
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: #f0f0f0;
+      border-bottom: 1px solid #ddd;
+      color: #333;
+      font-weight: bold;
+      padding: 15px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
     label {
       display: block;
+      font-size: 13px;
       font-weight: bold;
-      margin-top: 18px;
       margin-bottom: 6px;
-      font-size: 13px;
+      margin-top: 15px;
     }
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 6px;
+
+    input,
+    textarea,
+    select {
       border: 1px solid #ccc;
+      border-radius: 4px;
+      display: block;
+      font-family: Arial, sans-serif;
       font-size: 14px;
-    }
-    button {
-      margin-top: 18px;
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover {
-      background: #005ec2;
-    }
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    .msg {
-      display: none;
-      margin-top: 16px;
+      margin: 5px 0 15px;
       padding: 10px;
-      border-radius: 6px;
-      font-size: 13px;
+      width: 100%;
     }
+
+    input[type="range"] {
+      padding: 0;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    small {
+      color: #888;
+      display: block;
+      font-size: 12px;
+      margin-top: -8px;
+    }
+
+    button {
+      background: #007bff;
+      border: 0;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 10px 5px 0 0;
+      padding: 10px 16px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    button.success {
+      background: #28a745;
+    }
+
+    button.success:hover {
+      background: #1e7e34;
+    }
+
+    button.secondary {
+      background: #6c757d;
+    }
+
+    button.secondary:hover {
+      background: #545b62;
+    }
+
+    button.danger {
+      background: #dc3545;
+    }
+
+    button.danger:hover {
+      background: #bd2130;
+    }
+
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .msg {
+      border-radius: 4px;
+      display: none;
+      font-size: 13px;
+      margin-top: 12px;
+      padding: 10px;
+    }
+
     .msg.show {
       display: block;
     }
+
     .msg.error {
-      background: #ffe5e5;
-      border: 1px solid #e8b9b9;
-      color: #9d0000;
+      background: #ffe6e6;
+      border: 1px solid #ffb3b3;
+      color: #a00000;
     }
-    .msg.success {
-      background: #eafaf0;
-      border: 1px solid #bfe7c6;
-      color: #0d6f2a;
+
+    .msg.success-msg {
+      background: #e6ffe6;
+      border: 1px solid #b3deb3;
+      color: #087508;
     }
+
     .footer {
+      border-top: 1px solid #ddd;
+      color: #999;
+      font-size: 11px;
+      margin-top: 40px;
+      padding-top: 20px;
       text-align: center;
-      font-size: 12px;
-      color: #777;
-      margin-top: 30px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 18px;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .button-group {
+        display: block;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>Axvyn SRT Translator</h1>
-    <p class="subtitle">Free translation using LibreTranslate</p>
+  <main class="container">
+    <h1>⚙️ Axvyn</h1>
+    <p class="subtitle">Free Online File and Media Tools</p>
+    <p class="info">
+      Your files are processed in your browser whenever possible.
+    </p>
 
-    <label for="srtFile">Select SRT file</label>
-    <input id="srtFile" type="file" accept=".srt" />
+    <!-- Tool 1: Word to PDF -->
+    <section class="card">
+      <div class="card-header">
+        📄 Word (.docx) to PDF
+      </div>
 
-    <label for="sourceLanguage">Subtitle language</label>
-    <select id="sourceLanguage">
-      <option value="ar" selected>Arabic</option>
-      <option value="en">English</option>
-      <option value="es">Spanish</option>
-      <option value="fr">French</option>
-      <option value="de">German</option>
-      <option value="pt">Portuguese</option>
-      <option value="ru">Russian</option>
-      <option value="zh">Chinese</option>
-      <option value="hi">Hindi</option>
-      <option value="ja">Japanese</option>
-      <option value="ko">Korean</option>
-      <option value="it">Italian</option>
-      <option value="nl">Dutch</option>
-      <option value="pl">Polish</option>
-      <option value="tr">Turkish</option>
-    </select>
+      <div class="card-body">
+        <label for="docxFile">Select Word File:</label>
+        <input
+          id="docxFile"
+          type="file"
+          accept=".docx"
+        >
 
-    <label for="targetLanguage">Translate to</label>
-    <select id="targetLanguage">
-      <option value="en" selected>English</option>
-      <option value="ar">Arabic</option>
-      <option value="es">Spanish</option>
-      <option value="fr">French</option>
-      <option value="de">German</option>
-      <option value="pt">Portuguese</option>
-      <option value="ru">Russian</option>
-      <option value="zh">Chinese</option>
-      <option value="hi">Hindi</option>
-      <option value="ja">Japanese</option>
-      <option value="ko">Korean</option>
-      <option value="it">Italian</option>
-      <option value="nl">Dutch</option>
-      <option value="pl">Polish</option>
-      <option value="tr">Turkish</option>
-    </select>
+        <small>Maximum file size: 5 MB.</small>
 
-    <button id="translateBtn" type="button">Translate & Download</button>
+        <button
+          type="button"
+          onclick="convertDocxToPdf()"
+        >
+          Convert &amp; Download PDF
+        </button>
 
-    <div id="message" class="msg"></div>
+        <div id="docxMsg" class="msg"></div>
+      </div>
+    </section>
 
-    <div class="footer">© 2024 Axvyn</div>
-  </div>
+    <!-- Tool 2: Image Compressor -->
+    <section class="card">
+      <div class="card-header">
+        🖼️ Image Compressor
+      </div>
+
+      <div class="card-body">
+        <label for="imgFile">Select Image:</label>
+        <input
+          id="imgFile"
+          type="file"
+          accept="image/*"
+        >
+
+        <small>Maximum file size: 20 MB.</small>
+
+        <label for="imgQuality">Quality:</label>
+        <input
+          id="imgQuality"
+          type="range"
+          min="0.1"
+          max="1"
+          step="0.1"
+          value="0.7"
+        >
+
+        <small>
+          Quality: <span id="qualityValue">0.7</span>
+        </small>
+
+        <button
+          type="button"
+          onclick="compressImage()"
+        >
+          Compress &amp; Download
+        </button>
+
+        <div id="imgMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <!-- Tool 3: Text to Speech -->
+    <section class="card">
+      <div class="card-header">
+        🔊 Text to Voice
+      </div>
+
+      <div class="card-body">
+        <label for="ttsText">Enter Text:</label>
+        <textarea
+          id="ttsText"
+          maxlength="3000"
+          placeholder="Type or paste text here"
+        ></textarea>
+
+        <small id="charCount">
+          0 / 3000
+        </small>
+
+        <label for="speechRate">Speech Rate:</label>
+        <input
+          id="speechRate"
+          type="range"
+          min="0.5"
+          max="2"
+          step="0.1"
+          value="1"
+        >
+
+        <small>
+          Speed: <span id="rateValue">1</span>x
+        </small>
+
+        <label for="voiceLanguage">Select Language:</label>
+        <select id="voiceLanguage">
+          <option value="en-US">English US</option>
+          <option value="en-GB">English UK</option>
+          <option value="en-AU">English Australia</option>
+          <option value="ar-SA">Arabic</option>
+          <option value="es-ES">Spanish</option>
+          <option value="fr-FR">French</option>
+          <option value="de-DE">German</option>
+          <option value="it-IT">Italian</option>
+          <option value="pt-BR">Portuguese</option>
+          <option value="ru-RU">Russian</option>
+          <option value="ja-JP">Japanese</option>
+          <option value="ko-KR">Korean</option>
+          <option value="hi-IN">Hindi</option>
+          <option value="tr-TR">Turkish</option>
+        </select>
+
+        <div class="button-group">
+          <button
+            type="button"
+            class="success"
+            onclick="playVoice()"
+          >
+            ▶️ Play Voice
+          </button>
+
+          <button
+            type="button"
+            class="danger"
+            onclick="stopVoice()"
+          >
+            ⏹️ Stop
+          </button>
+        </div>
+
+        <div id="ttsMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <!-- Tool 4: WEBP and AVIF to PNG -->
+    <section class="card">
+      <div class="card-header">
+        🔄 WEBP / AVIF to PNG Converter
+      </div>
+
+      <div class="card-body">
+        <label for="convertImageFile">
+          Select WEBP or AVIF Image:
+        </label>
+
+        <input
+          id="convertImageFile"
+          type="file"
+          accept=".webp,.avif,image/webp,image/avif"
+        >
+
+        <small>
+          Maximum file size: 20 MB. Conversion happens in your browser.
+        </small>
+
+        <button
+          id="convertImageButton"
+          type="button"
+          onclick="convertToPng()"
+        >
+          Convert &amp; Download PNG
+        </button>
+
+        <div id="convertImageMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <!-- Tool 5: YouTube Subtitle Downloader -->
+    <section class="card">
+      <div class="card-header">
+        🎥 Download YouTube Subtitles
+      </div>
+
+      <div class="card-body">
+        <label for="ytUrl">YouTube Video URL:</label>
+
+        <input
+          id="ytUrl"
+          type="url"
+          placeholder="https://www.youtube.com/watch?v=..."
+        >
+
+        <label for="ytLang">Language:</label>
+
+        <select id="ytLang">
+          <option value="auto">Auto</option>
+          <option value="en">English</option>
+          <option value="ar">Arabic</option>
+          <option value="es">Spanish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="pt">Portuguese</option>
+          <option value="ru">Russian</option>
+          <option value="ja">Japanese</option>
+          <option value="ko">Korean</option>
+          <option value="it">Italian</option>
+          <option value="nl">Dutch</option>
+          <option value="pl">Polish</option>
+          <option value="tr">Turkish</option>
+        </select>
+
+        <button
+          type="button"
+          onclick="downloadYouTubeSubtitles()"
+        >
+          Fetch &amp; Download SRT
+        </button>
+
+        <div id="ytMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2024 Axvyn. All tools work in your browser.</p>
+    </footer>
+  </main>
+
+  <!-- Required libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
   <script>
-    const button = document.getElementById('translateBtn');
-    const msg = document.getElementById('message');
+    /*
+     * General helper functions
+     */
 
-    function showMessage(text, isError) {
-      msg.textContent = text;
-      msg.className = 'msg show ' + (isError ? 'error' : 'success');
-    }
+    function showMsg(elementId, text, isError) {
+      const element = document.getElementById(elementId);
 
-    function setBusy(isBusy) {
-      button.disabled = isBusy;
-      button.textContent = isBusy ? 'Translating...' : 'Translate & Download';
-    }
-
-    async function translateSrt() {
-      const file = document.getElementById('srtFile').files[0];
-
-      if (!file) {
-        showMessage('Please choose an SRT file first.', true);
+      if (!element) {
         return;
       }
 
-      if (!file.name.toLowerCase().endsWith('.srt')) {
-        showMessage('Please choose a valid .srt file.', true);
+      element.textContent = text;
+      element.classList.add('show');
+      element.classList.remove('error', 'success-msg');
+
+      if (isError) {
+        element.classList.add('error');
+      } else {
+        element.classList.add('success-msg');
+      }
+    }
+
+    function downloadFile(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(function() {
+        URL.revokeObjectURL(url);
+      }, 1000);
+    }
+
+    function bytesToMB(bytes) {
+      return (bytes / 1048576).toFixed(2);
+    }
+
+    /*
+     * Tool 1: Word to PDF
+     */
+
+    function convertDocxToPdf() {
+      const fileInput = document.getElementById('docxFile');
+      const file = fileInput.files[0];
+      const messageId = 'docxMsg';
+
+      if (!file) {
+        showMsg(messageId, 'Select a Word file first.', true);
+        return;
+      }
+
+      if (!file.name.toLowerCase().endsWith('.docx')) {
+        showMsg(messageId, 'Please select a valid .docx file.', true);
         return;
       }
 
       if (file.size > 5 * 1024 * 1024) {
-        showMessage('The maximum file size is 5 MB.', true);
+        showMsg(
+          messageId,
+          'File is ' + bytesToMB(file.size) +
+          ' MB. Maximum is 5 MB.',
+          true
+        );
         return;
       }
 
-      const sourceLanguage = document.getElementById('sourceLanguage').value;
-      const targetLanguage = document.getElementById('targetLanguage').value;
-
-      if (sourceLanguage === targetLanguage) {
-        showMessage('Choose different source and target languages.', true);
+      if (typeof window.mammoth === 'undefined') {
+        showMsg(
+          messageId,
+          'The Word conversion library could not load. Reload the page and try again.',
+          true
+        );
         return;
       }
 
-      const formData = new FormData();
-      formData.append('srtFile', file);
-      formData.append('sourceLanguage', sourceLanguage);
-      formData.append('targetLanguage', targetLanguage);
+      if (typeof window.html2pdf === 'undefined') {
+        showMsg(
+          messageId,
+          'The PDF conversion library could not load. Reload the page and try again.',
+          true
+        );
+        return;
+      }
 
-      setBusy(true);
-      showMessage('Uploading and translating...', false);
+      showMsg(messageId, 'Converting... please wait.', false);
+
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        window.mammoth
+          .convertToHtml({
+            arrayBuffer: event.target.result
+          })
+          .then(function(result) {
+            const element = document.createElement('div');
+
+            element.style.background = '#ffffff';
+            element.style.color = '#000000';
+            element.style.fontFamily = 'Arial, sans-serif';
+            element.style.padding = '20px';
+            element.innerHTML = result.value;
+
+            const options = {
+              margin: 10,
+              filename: file.name.replace(/\.docx$/i, '') + '.pdf',
+              image: {
+                type: 'jpeg',
+                quality: 0.98
+              },
+              html2canvas: {
+                scale: 2
+              },
+              jsPDF: {
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+              }
+            };
+
+            return window
+              .html2pdf()
+              .set(options)
+              .from(element)
+              .save();
+          })
+          .then(function() {
+            showMsg(
+              messageId,
+              'PDF downloaded successfully.',
+              false
+            );
+          })
+          .catch(function(error) {
+            console.error('DOCX error:', error);
+
+            showMsg(
+              messageId,
+              'Conversion failed: ' + error.message,
+              true
+            );
+          });
+      };
+
+      reader.onerror = function() {
+        showMsg(
+          messageId,
+          'Could not read the selected file.',
+          true
+        );
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+
+    /*
+     * Tool 2: Image compressor
+     */
+
+    document
+      .getElementById('imgQuality')
+      .addEventListener('input', function() {
+        document.getElementById('qualityValue').textContent =
+          this.value;
+      });
+
+    function compressImage() {
+      const fileInput = document.getElementById('imgFile');
+      const file = fileInput.files[0];
+      const messageId = 'imgMsg';
+
+      if (!file) {
+        showMsg(messageId, 'Select an image first.', true);
+        return;
+      }
+
+      if (file.size > 20 * 1024 * 1024) {
+        showMsg(
+          messageId,
+          'File is larger than the 20 MB limit.',
+          true
+        );
+        return;
+      }
+
+      const quality = parseFloat(
+        document.getElementById('imgQuality').value
+      );
+
+      const imageUrl = URL.createObjectURL(file);
+      const image = new Image();
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+
+      showMsg(messageId, 'Compressing image...', false);
+
+      image.onload = function() {
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+
+        context.drawImage(image, 0, 0);
+        URL.revokeObjectURL(imageUrl);
+
+        canvas.toBlob(
+          function(blob) {
+            if (!blob) {
+              showMsg(
+                messageId,
+                'Could not compress this image.',
+                true
+              );
+              return;
+            }
+
+            const outputName =
+              file.name.replace(/\.[^/.]+$/, '') +
+              '_compressed.jpg';
+
+            downloadFile(blob, outputName);
+
+            showMsg(
+              messageId,
+              'Compressed image downloaded successfully.',
+              false
+            );
+          },
+          'image/jpeg',
+          quality
+        );
+      };
+
+      image.onerror = function() {
+        URL.revokeObjectURL(imageUrl);
+
+        showMsg(
+          messageId,
+          'Could not read this image.',
+          true
+        );
+      };
+
+      image.src = imageUrl;
+    }
+
+    /*
+     * Tool 3: Text to speech
+     */
+
+    document
+      .getElementById('ttsText')
+      .addEventListener('input', function() {
+        document.getElementById('charCount').textContent =
+          this.value.length + ' / 3000';
+      });
+
+    document
+      .getElementById('speechRate')
+      .addEventListener('input', function() {
+        document.getElementById('rateValue').textContent =
+          this.value;
+      });
+
+    function playVoice() {
+      const text = document
+        .getElementById('ttsText')
+        .value
+        .trim();
+
+      const language = document
+        .getElementById('voiceLanguage')
+        .value;
+
+      const rate = parseFloat(
+        document.getElementById('speechRate').value
+      );
+
+      if (!text) {
+        showMsg('ttsMsg', 'Enter some text first.', true);
+        return;
+      }
+
+      if (text.length > 3000) {
+        showMsg(
+          'ttsMsg',
+          'Maximum length is 3000 characters.',
+          true
+        );
+        return;
+      }
+
+      if (!('speechSynthesis' in window)) {
+        showMsg(
+          'ttsMsg',
+          'Text-to-speech is not supported by this browser.',
+          true
+        );
+        return;
+      }
+
+      stopVoice();
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language;
+      utterance.rate = rate;
+
+      utterance.onstart = function() {
+        showMsg('ttsMsg', 'Playing voice...', false);
+      };
+
+      utterance.onend = function() {
+        showMsg('ttsMsg', 'Playback finished.', false);
+      };
+
+      utterance.onerror = function() {
+        showMsg(
+          'ttsMsg',
+          'Text-to-speech playback failed.',
+          true
+        );
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function stopVoice() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+
+      showMsg('ttsMsg', 'Playback stopped.', false);
+    }
+
+    /*
+     * Tool 4: WEBP / AVIF to PNG
+     */
+
+    function convertToPng() {
+      const fileInput = document.getElementById(
+        'convertImageFile'
+      );
+
+      const button = document.getElementById(
+        'convertImageButton'
+      );
+
+      const messageId = 'convertImageMsg';
+      const file = fileInput.files[0];
+
+      if (!file) {
+        showMsg(
+          messageId,
+          'Select a WEBP or AVIF image first.',
+          true
+        );
+        return;
+      }
+
+      const fileName = file.name.toLowerCase();
+
+      const supportedFile =
+        fileName.endsWith('.webp') ||
+        fileName.endsWith('.avif') ||
+        file.type === 'image/webp' ||
+        file.type === 'image/avif';
+
+      if (!supportedFile) {
+        showMsg(
+          messageId,
+          'Please select a valid WEBP or AVIF image.',
+          true
+        );
+        return;
+      }
+
+      if (file.size > 20 * 1024 * 1024) {
+        showMsg(
+          messageId,
+          'The image is larger than the 20 MB limit.',
+          true
+        );
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Converting...';
+
+      showMsg(
+        messageId,
+        'Converting image to PNG...',
+        false
+      );
+
+      const imageUrl = URL.createObjectURL(file);
+      const image = new Image();
+
+      image.onload = function() {
+        try {
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+
+          if (!context) {
+            throw new Error(
+              'Your browser does not support image conversion.'
+            );
+          }
+
+          canvas.width = image.naturalWidth;
+          canvas.height = image.naturalHeight;
+
+          context.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+
+          context.drawImage(image, 0, 0);
+
+          canvas.toBlob(function(blob) {
+            URL.revokeObjectURL(imageUrl);
+
+            button.disabled = false;
+            button.textContent = 'Convert & Download PNG';
+
+            if (!blob) {
+              showMsg(
+                messageId,
+                'The browser could not convert this image.',
+                true
+              );
+              return;
+            }
+
+            const outputName = file.name
+              .replace(/\.(webp|avif)$/i, '')
+              .replace(/[^a-z0-9_\- ]/gi, '_') + '.png';
+
+            downloadFile(blob, outputName);
+
+            showMsg(
+              messageId,
+              'PNG image downloaded successfully.',
+              false
+            );
+          }, 'image/png');
+        } catch (error) {
+          URL.revokeObjectURL(imageUrl);
+
+          button.disabled = false;
+          button.textContent = 'Convert & Download PNG';
+
+          showMsg(
+            messageId,
+            'Conversion failed: ' + error.message,
+            true
+          );
+        }
+      };
+
+      image.onerror = function() {
+        URL.revokeObjectURL(imageUrl);
+
+        button.disabled = false;
+        button.textContent = 'Convert & Download PNG';
+
+        showMsg(
+          messageId,
+          'This browser cannot read this WEBP or AVIF image.',
+          true
+        );
+      };
+
+      image.src = imageUrl;
+    }
+
+    /*
+     * Tool 5: YouTube subtitle downloader
+     *
+     * This uses the backend route if it still exists in server.js.
+     */
+
+    function getYouTubeVideoId(videoUrl) {
+      try {
+        const parsedUrl = new URL(videoUrl);
+
+        if (parsedUrl.hostname.includes('youtu.be')) {
+          return parsedUrl.pathname.replace('/', '');
+        }
+
+        return parsedUrl.searchParams.get('v');
+      } catch (error) {
+        return null;
+      }
+    }
+
+    async function downloadYouTubeSubtitles() {
+      const videoUrl = document
+        .getElementById('ytUrl')
+        .value
+        .trim();
+
+      const language = document
+        .getElementById('ytLang')
+        .value;
+
+      const messageId = 'ytMsg';
+
+      if (!videoUrl) {
+        showMsg(
+          messageId,
+          'Paste a YouTube URL first.',
+          true
+        );
+        return;
+      }
+
+      const videoId = getYouTubeVideoId(videoUrl);
+
+      if (!videoId) {
+        showMsg(
+          messageId,
+          'Invalid YouTube URL.',
+          true
+        );
+        return;
+      }
+
+      showMsg(
+        messageId,
+        'Fetching subtitles...',
+        false
+      );
 
       try {
-        const response = await fetch('/api/translate-srt', {
-          method: 'POST',
-          body: formData
-        });
+        const requestUrl =
+          '/api/youtube-subtitles?url=' +
+          encodeURIComponent(videoUrl) +
+          '&lang=' +
+          encodeURIComponent(language);
+
+        const response = await fetch(requestUrl);
 
         if (!response.ok) {
-          const data = await response.json().catch(() => ({}));
-          throw new Error(data.error || 'Translation failed.');
+          const data = await response
+            .json()
+            .catch(function() {
+              return {};
+            });
+
+          throw new Error(
+            data.error ||
+            'Could not download YouTube subtitles.'
+          );
         }
 
         const blob = await response.blob();
-        const contentDisposition = response.headers.get('content-disposition') || '';
-        let filename = file.name.replace(/\.srt$/i, '') + '_' + targetLanguage + '.srt';
-        const match = contentDisposition.match(/filename="([^"]+)"/);
+
+        const contentDisposition =
+          response.headers.get(
+            'content-disposition'
+          ) || '';
+
+        let filename =
+          videoId + '_' + language + '.srt';
+
+        const match = contentDisposition.match(
+          /filename="([^"]+)"/
+        );
 
         if (match) {
           filename = match[1];
         }
 
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        downloadFile(blob, filename);
 
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-
-        showMessage('Translation complete. Downloaded ' + filename, false);
+        showMsg(
+          messageId,
+          'Subtitles downloaded successfully.',
+          false
+        );
       } catch (error) {
-        console.error(error);
-        showMessage(error.message || 'Translation failed.', true);
-      } finally {
-        setBusy(false);
+        console.error(
+          'YouTube subtitle error:',
+          error
+        );
+
+        showMsg(
+          messageId,
+          error.message ||
+          'Could not download subtitles.',
+          true
+        );
       }
     }
-
-    document.getElementById('translateBtn').addEventListener('click', translateSrt);
   </script>
 </body>
 </html>
