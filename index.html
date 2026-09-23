@@ -59,6 +59,7 @@
     .card-header {
       background: #f0f0f0;
       border-bottom: 1px solid #ddd;
+      color: #333;
       font-weight: bold;
       padding: 15px;
     }
@@ -359,7 +360,9 @@
 
     <!-- Tool 4: WEBP and AVIF to PNG -->
     <section class="card">
-      <div class="card-header">🔄 WEBP / AVIF to PNG Converter</div>
+      <div class="card-header">
+        🔄 WEBP / AVIF to PNG Converter
+      </div>
 
       <div class="card-body">
         <label for="convertImageFile">
@@ -388,19 +391,96 @@
       </div>
     </section>
 
+    <!-- Tool 5: PDF to JPG / PNG -->
+    <section class="card">
+      <div class="card-header">
+        📑 PDF → JPG / PNG
+      </div>
+
+      <div class="card-body">
+        <label for="pdfFile">
+          Select PDF File:
+        </label>
+
+        <input
+          id="pdfFile"
+          type="file"
+          accept=".pdf,application/pdf"
+        >
+
+        <small>
+          Maximum file size: 5 MB. Each PDF page becomes an image.
+        </small>
+
+        <label for="pdfImageFormat">
+          Output Format:
+        </label>
+
+        <select id="pdfImageFormat">
+          <option value="png">PNG</option>
+          <option value="jpeg">JPG</option>
+        </select>
+
+        <label for="pdfScale">
+          Image Quality:
+        </label>
+
+        <select id="pdfScale">
+          <option value="1.5">Standard</option>
+          <option value="2" selected>High</option>
+          <option value="3">Very High</option>
+        </select>
+
+        <button
+          id="pdfConvertButton"
+          type="button"
+          onclick="convertPdfToImages()"
+        >
+          Convert &amp; Download Images
+        </button>
+
+        <div id="pdfMsg" class="msg"></div>
+      </div>
+    </section>
+
     <footer class="footer">
       <p>© 2024 Axvyn. All tools work in your browser.</p>
     </footer>
   </main>
 
-  <!-- DOCX conversion libraries -->
+  <!-- DOCX libraries -->
   <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
-  <!-- Browser audio generation library -->
+  <!-- Text-to-speech audio library -->
   <script src="https://js.puter.com/v2/"></script>
 
+  <!-- PDF rendering library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+
   <script>
+    let pdfjsLib = null;
+
+    /*
+     * Load PDF.js as an ES module.
+     */
+    import(
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs'
+    )
+      .then(function(pdfModule) {
+        pdfjsLib = pdfModule;
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+          'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+      })
+      .catch(function(error) {
+        console.error('PDF.js failed to load:', error);
+      });
+
+    /*
+     * General helper functions
+     */
+
     function showMsg(elementId, text, isError) {
       const element = document.getElementById(elementId);
 
@@ -647,9 +727,6 @@
 
     /*
      * Tool 3: Text to speech
-     *
-     * Play Voice uses the browser's speech engine.
-     * Create Audio uses Puter and creates a playable/downloadable file.
      */
 
     let speechAudioUrl = null;
@@ -1016,6 +1093,228 @@
       };
 
       image.src = imageUrl;
+    }
+
+    /*
+     * Tool 5: PDF to JPG / PNG
+     */
+
+    async function convertPdfToImages() {
+      const fileInput =
+        document.getElementById('pdfFile');
+
+      const format =
+        document.getElementById('pdfImageFormat').value;
+
+      const scale =
+        parseFloat(
+          document.getElementById('pdfScale').value
+        );
+
+      const button =
+        document.getElementById('pdfConvertButton');
+
+      const file = fileInput.files[0];
+
+      if (!file) {
+        showMsg(
+          'pdfMsg',
+          'Select a PDF file first.',
+          true
+        );
+        return;
+      }
+
+      if (
+        !file.name.toLowerCase().endsWith('.pdf') &&
+        file.type !== 'application/pdf'
+      ) {
+        showMsg(
+          'pdfMsg',
+          'Please select a valid PDF file.',
+          true
+        );
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        showMsg(
+          'pdfMsg',
+          'File is ' + bytesToMB(file.size) +
+          ' MB. Maximum is 5 MB.',
+          true
+        );
+        return;
+      }
+
+      if (!pdfjsLib) {
+        showMsg(
+          'pdfMsg',
+          'The PDF converter is still loading. Please wait a moment and try again.',
+          true
+        );
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Converting...';
+
+      try {
+        showMsg(
+          'pdfMsg',
+          'Reading PDF file...',
+          false
+        );
+
+        const fileBuffer =
+          await file.arrayBuffer();
+
+        const pdf =
+          await pdfjsLib.getDocument({
+            data: fileBuffer
+          }).promise;
+
+        const pageCount = pdf.numPages;
+
+        if (pageCount === 0) {
+          throw new Error(
+            'The PDF does not contain any pages.'
+          );
+        }
+
+        const extension =
+          format === 'jpeg'
+            ? 'jpg'
+            : 'png';
+
+        const baseName = file.name
+          .replace(/\.pdf$/i, '')
+          .replace(/[^a-z0-9_\- ]/gi, '_');
+
+        for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+          showMsg(
+            'pdfMsg',
+            'Converting page ' +
+            pageNumber +
+            ' of ' +
+            pageCount +
+            '...',
+            false
+          );
+
+          const page =
+            await pdf.getPage(pageNumber);
+
+          const viewport =
+            page.getViewport({
+              scale: scale
+            });
+
+          const canvas =
+            document.createElement('canvas');
+
+          const context =
+            canvas.getContext('2d');
+
+          canvas.width = Math.ceil(viewport.width);
+          canvas.height = Math.ceil(viewport.height);
+
+          if (format === 'jpeg') {
+            context.fillStyle = '#ffffff';
+            context.fillRect(
+              0,
+              0,
+              canvas.width,
+              canvas.height
+            );
+          }
+
+          await page.render({
+            canvasContext: context,
+            viewport: viewport
+          }).promise;
+
+          const mimeType =
+            format === 'jpeg'
+              ? 'image/jpeg'
+              : 'image/png';
+
+          const quality =
+            format === 'jpeg'
+              ? 0.95
+              : undefined;
+
+          const blob =
+            await canvasToBlob(
+              canvas,
+              mimeType,
+              quality
+            );
+
+          const outputName =
+            baseName +
+            '_page_' +
+            pageNumber +
+            '.' +
+            extension;
+
+          downloadFile(blob, outputName);
+
+          // Give the browser time to process each download.
+          await wait(250);
+        }
+
+        showMsg(
+          'pdfMsg',
+          pageCount === 1
+            ? 'PDF page downloaded successfully.'
+            : pageCount +
+              ' PDF pages were converted and downloaded.',
+          false
+        );
+      } catch (error) {
+        console.error(
+          'PDF conversion error:',
+          error
+        );
+
+        showMsg(
+          'pdfMsg',
+          'PDF conversion failed: ' +
+          error.message,
+          true
+        );
+      } finally {
+        button.disabled = false;
+        button.textContent =
+          'Convert & Download Images';
+      }
+    }
+
+    function canvasToBlob(canvas, mimeType, quality) {
+      return new Promise(function(resolve, reject) {
+        canvas.toBlob(
+          function(blob) {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(
+                new Error(
+                  'Could not create image file.'
+                )
+              );
+            }
+          },
+          mimeType,
+          quality
+        );
+      });
+    }
+
+    function wait(milliseconds) {
+      return new Promise(function(resolve) {
+        setTimeout(resolve, milliseconds);
+      });
     }
   </script>
 </body>
