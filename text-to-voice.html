@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Text to Voice - Axvyn</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f5f5f5; color: #333; font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+    .container { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); margin: 0 auto; max-width: 900px; padding: 30px; }
+    h1 { color: #333; font-size: 30px; margin-bottom: 10px; text-align: center; }
+    .subtitle { color: #666; font-size: 14px; margin-bottom: 12px; text-align: center; }
+    .info { color: #999; font-size: 12px; margin-bottom: 30px; text-align: center; }
+    .site-navigation { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 auto 30px; }
+    .site-navigation a { background: #007bff; border-radius: 4px; color: #fff; font-size: 13px; padding: 10px 14px; text-decoration: none; }
+    .site-navigation a:hover { background: #0056b3; }
+    .card { border: 1px solid #ddd; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+    .card-header { background: #f0f0f0; border-bottom: 1px solid #ddd; color: #333; font-weight: bold; padding: 15px; }
+    .card-body { padding: 20px; }
+    .tool-description { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; margin-bottom: 20px; padding: 16px; }
+    .tool-description h2 { font-size: 22px; margin-bottom: 10px; }
+    .tool-description p { margin-bottom: 10px; }
+    .tool-description ul { margin-left: 20px; margin-top: 8px; }
+    label { display: block; font-size: 13px; font-weight: bold; margin: 15px 0 6px; }
+    textarea, input, select { border: 1px solid #ccc; border-radius: 4px; display: block; font-family: Arial, sans-serif; font-size: 14px; margin: 5px 0 15px; padding: 10px; width: 100%; }
+    textarea { min-height: 110px; resize: vertical; }
+    input[type="range"] { padding: 0; }
+    .button-group { display: flex; flex-wrap: wrap; gap: 5px; }
+    button { background: #007bff; border: 0; border-radius: 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; margin: 10px 5px 0 0; padding: 10px 16px; }
+    button:hover { background: #0056b3; }
+    button.success { background: #28a745; }
+    button.success:hover { background: #1e7e34; }
+    button.secondary { background: #6c757d; }
+    button.secondary:hover { background: #545b62; }
+    button.danger { background: #dc3545; }
+    button.danger:hover { background: #bd2130; }
+    .msg { border-radius: 4px; display: none; font-size: 13px; margin-top: 12px; padding: 10px; }
+    .msg.show { display: block; }
+    .msg.error { background: #ffe6e6; border: 1px solid #ffb3b3; color: #a00000; }
+    .msg.success-msg { background: #e6ffe6; border: 1px solid #b3deb3; color: #087508; }
+    .audio-player { display: none; margin-top: 15px; width: 100%; }
+    .audio-player.show { display: block; }
+    .footer { border-top: 1px solid #ddd; color: #999; font-size: 11px; margin-top: 40px; padding-top: 20px; text-align: center; }
+    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .button-group { display: block; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } button { width: 100%; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>⚙️ Axvyn</h1>
+    <p class="subtitle">Free Online File and Media Tools</p>
+    <p class="info">Files are processed in your browser whenever possible.</p>
+
+    <nav class="site-navigation" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <section class="tool-description">
+      <h2>🔊 Text to Voice</h2>
+      <p><strong>Description:</strong> Convert any text into natural-sounding speech. Supports multiple languages and accents. Useful for accessibility, creating voice-overs, or just listening to content hands-free.</p>
+      <p><strong>How to Use:</strong></p>
+      <ul>
+        <li>Type or paste your text in the text area (up to 3000 characters)</li>
+        <li>Select your preferred language</li>
+        <li>Adjust the speech speed if needed</li>
+        <li>Click "Play Voice" to hear it, or "Create Audio" to download as MP3</li>
+        <li>Click "Stop" to stop playback anytime</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <div class="card-header">🔊 Text to Voice</div>
+      <div class="card-body">
+        <label for="ttsText">Enter Text:</label>
+        <textarea id="ttsText" maxlength="3000" placeholder="Type or paste text here"></textarea>
+        <small id="charCount">0 / 3000</small>
+
+        <label for="speechRate">Speech Rate:</label>
+        <input id="speechRate" type="range" min="0.5" max="2" step="0.1" value="1">
+        <small>Speed: <span id="rateValue">1</span>x</small>
+
+        <label for="voiceLanguage">Select Language:</label>
+        <select id="voiceLanguage">
+          <option value="en-US">English US</option>
+          <option value="en-GB">English UK</option>
+          <option value="en-AU">English Australia</option>
+          <option value="ar">Arabic</option>
+          <option value="es-ES">Spanish</option>
+          <option value="fr-FR">French</option>
+          <option value="de-DE">German</option>
+          <option value="it-IT">Italian</option>
+          <option value="pt-BR">Portuguese</option>
+          <option value="ru-RU">Russian</option>
+          <option value="ja-JP">Japanese</option>
+          <option value="ko-KR">Korean</option>
+          <option value="hi-IN">Hindi</option>
+          <option value="tr-TR">Turkish</option>
+        </select>
+
+        <div class="button-group">
+          <button type="button" class="success" onclick="playTextToSpeech()">▶️ Play Voice</button>
+          <button type="button" class="secondary" onclick="generateSpeechAudio()">🎵 Create Audio</button>
+          <button type="button" class="danger" onclick="stopTextToSpeech()">⏹️ Stop</button>
+        </div>
+
+        <audio id="speechAudioPlayer" class="audio-player" controls></audio>
+        <div id="ttsMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2024 Axvyn. All tools work in your browser.</p>
+    </footer>
+  </main>
+
+  <script src="https://js.puter.com/v2/"></script>
+  <script>
+    function showMsg(elementId, text, isError) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      element.textContent = text;
+      element.classList.add('show');
+      element.classList.remove('error', 'success-msg');
+      element.classList.add(isError ? 'error' : 'success-msg');
+    }
+    let speechAudioUrl = null, browserSpeechActive = false;
+    document.getElementById('ttsText').addEventListener('input', function() {
+      document.getElementById('charCount').textContent = this.value.length + ' / 3000';
+    });
+    document.getElementById('speechRate').addEventListener('input', function() {
+      document.getElementById('rateValue').textContent = this.value;
+    });
+    function getSpeechInput() {
+      const text = document.getElementById('ttsText').value.trim();
+      const language = document.getElementById('voiceLanguage').value;
+      const rate = parseFloat(document.getElementById('speechRate').value);
+      if (!text) { showMsg('ttsMsg', 'Enter some text first.', true); return null; }
+      if (text.length > 3000) { showMsg('ttsMsg', 'Maximum length is 3000 characters.', true); return null; }
+      return { text, language, rate };
+    }
+    function playTextToSpeech() {
+      const input = getSpeechInput();
+      if (!input) return;
+      if (!('speechSynthesis' in window)) { showMsg('ttsMsg', 'Speech playback is not supported by this browser.', true); return; }
+      stopTextToSpeech();
+      const utterance = new SpeechSynthesisUtterance(input.text);
+      utterance.lang = input.language;
+      utterance.rate = input.rate;
+      browserSpeechActive = true;
+      utterance.onstart = () => showMsg('ttsMsg', 'Playing voice...', false);
+      utterance.onend = () => { browserSpeechActive = false; showMsg('ttsMsg', 'Playback finished.', false); };
+      utterance.onerror = () => { browserSpeechActive = false; showMsg('ttsMsg', 'Browser voice playback failed.', true); };
+      window.speechSynthesis.speak(utterance);
+    }
+    async function generateSpeechAudio() {
+      const input = getSpeechInput();
+      if (!input) return;
+      if (typeof window.puter === 'undefined' || !window.puter.ai || typeof window.puter.ai.txt2speech !== 'function') {
+        showMsg('ttsMsg', 'The downloadable audio service is unavailable. Reload the page and try again.', true);
+        return;
+      }
+      showMsg('ttsMsg', 'Creating downloadable audio...', false);
+      try {
+        stopTextToSpeech();
+        const audioElement = await window.puter.ai.txt2speech(input.text, input.language);
+        if (!audioElement || !audioElement.src) throw new Error('No audio file was returned.');
+        const player = document.getElementById('speechAudioPlayer');
+        if (speechAudioUrl) { URL.revokeObjectURL(speechAudioUrl); speechAudioUrl = null; }
+        const response = await fetch(audioElement.src);
+        if (!response.ok) throw new Error('Could not retrieve the audio file.');
+        const audioBlob = await response.blob();
+        speechAudioUrl = URL.createObjectURL(audioBlob);
+        player.src = speechAudioUrl;
+        player.classList.add('show');
+        player.load();
+        const filename = 'axvyn_voice_' + Date.now() + '.mp3';
+        const link = document.createElement('a');
+        link.href = speechAudioUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showMsg('ttsMsg', 'Audio created, playable, and downloaded as ' + filename, false);
+      } catch (error) {
+        console.error('Audio generation error:', error);
+        showMsg('ttsMsg', 'Could not create downloadable audio: ' + error.message, true);
+      }
+    }
+    function stopTextToSpeech() {
+      if ('speechSynthesis' in window && browserSpeechActive) window.speechSynthesis.cancel();
+      const player = document.getElementById('speechAudioPlayer');
+      if (player && !player.paused) { player.pause(); player.currentTime = 0; }
+      browserSpeechActive = false;
+    }
+  </script>
+</body>
+</html>
