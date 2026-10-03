@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Compressor - Axvyn</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f5f5f5; color: #333; font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+    .container { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); margin: 0 auto; max-width: 900px; padding: 30px; }
+    h1 { color: #333; font-size: 30px; margin-bottom: 10px; text-align: center; }
+    .subtitle { color: #666; font-size: 14px; margin-bottom: 12px; text-align: center; }
+    .info { color: #999; font-size: 12px; margin-bottom: 30px; text-align: center; }
+    .site-navigation { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 auto 30px; }
+    .site-navigation a { background: #007bff; border-radius: 4px; color: #fff; font-size: 13px; padding: 10px 14px; text-decoration: none; }
+    .site-navigation a:hover { background: #0056b3; }
+    .card { border: 1px solid #ddd; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+    .card-header { background: #f0f0f0; border-bottom: 1px solid #ddd; color: #333; font-weight: bold; padding: 15px; }
+    .card-body { padding: 20px; }
+    .tool-description { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; margin-bottom: 20px; padding: 16px; }
+    .tool-description h2 { font-size: 22px; margin-bottom: 10px; }
+    .tool-description p { margin-bottom: 10px; }
+    .tool-description ul { margin-left: 20px; margin-top: 8px; }
+    label { display: block; font-size: 13px; font-weight: bold; margin: 15px 0 6px; }
+    input { border: 1px solid #ccc; border-radius: 4px; display: block; font-family: Arial, sans-serif; font-size: 14px; margin: 5px 0 15px; padding: 10px; width: 100%; }
+    input[type="range"] { padding: 0; }
+    button { background: #007bff; border: 0; border-radius: 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; margin: 10px 5px 0 0; padding: 10px 16px; }
+    button:hover { background: #0056b3; }
+    .msg { border-radius: 4px; display: none; font-size: 13px; margin-top: 12px; padding: 10px; }
+    .msg.show { display: block; }
+    .msg.error { background: #ffe6e6; border: 1px solid #ffb3b3; color: #a00000; }
+    .msg.success-msg { background: #e6ffe6; border: 1px solid #b3deb3; color: #087508; }
+    .footer { border-top: 1px solid #ddd; color: #999; font-size: 11px; margin-top: 40px; padding-top: 20px; text-align: center; }
+    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>⚙️ Axvyn</h1>
+    <p class="subtitle">Free Online File and Media Tools</p>
+    <p class="info">Files are processed in your browser whenever possible.</p>
+
+    <nav class="site-navigation" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <section class="tool-description">
+      <h2>🖼️ Image Compressor</h2>
+      <p><strong>Description:</strong> Reduce image file size while maintaining visual quality. Perfect for web use, email, or cloud storage. Compress any image format instantly without installing software.</p>
+      <p><strong>How to Use:</strong></p>
+      <ul>
+        <li>Click "Select Image" and choose the image to compress</li>
+        <li>Adjust the quality slider (0.1 = low quality, small size | 1.0 = high quality, larger size)</li>
+        <li>Click "Compress & Download"</li>
+        <li>Your compressed image will be downloaded as JPG</li>
+        <li>Maximum file size: 20 MB</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <div class="card-header">🖼️ Image Compressor</div>
+      <div class="card-body">
+        <label for="imgFile">Select Image:</label>
+        <input id="imgFile" type="file" accept="image/*">
+        <small>Maximum file size: 20 MB.</small>
+        <label for="imgQuality">Quality:</label>
+        <input id="imgQuality" type="range" min="0.1" max="1" step="0.1" value="0.7">
+        <small>Quality: <span id="qualityValue">0.7</span></small>
+        <button type="button" onclick="compressImage()">Compress &amp; Download</button>
+        <div id="imgMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2024 Axvyn. All tools work in your browser.</p>
+    </footer>
+  </main>
+
+  <script>
+    function showMsg(elementId, text, isError) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      element.textContent = text;
+      element.classList.add('show');
+      element.classList.remove('error', 'success-msg');
+      element.classList.add(isError ? 'error' : 'success-msg');
+    }
+    function downloadFile(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    document.getElementById('imgQuality').addEventListener('input', function() {
+      document.getElementById('qualityValue').textContent = this.value;
+    });
+    function compressImage() {
+      const file = document.getElementById('imgFile').files[0];
+      const messageId = 'imgMsg';
+      if (!file) { showMsg(messageId, 'Select an image first.', true); return; }
+      if (file.size > 20 * 1024 * 1024) { showMsg(messageId, 'The image is larger than the 20 MB limit.', true); return; }
+      const quality = parseFloat(document.getElementById('imgQuality').value);
+      const imageUrl = URL.createObjectURL(file);
+      const image = new Image();
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      showMsg(messageId, 'Compressing image...', false);
+      image.onload = function() {
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        context.drawImage(image, 0, 0);
+        URL.revokeObjectURL(imageUrl);
+        canvas.toBlob(function(blob) {
+          if (!blob) { showMsg(messageId, 'Could not compress this image.', true); return; }
+          const outputName = file.name.replace(/\.[^/.]+$/, '') + '_compressed.jpg';
+          downloadFile(blob, outputName);
+          showMsg(messageId, 'Compressed image downloaded.', false);
+        }, 'image/jpeg', quality);
+      };
+      image.onerror = function() {
+        URL.revokeObjectURL(imageUrl);
+        showMsg(messageId, 'Could not read this image.', true);
+      };
+      image.src = imageUrl;
+    }
+  </script>
+</body>
+</html>
