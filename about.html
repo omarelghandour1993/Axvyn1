@@ -6,73 +6,239 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About Us - Axvyn</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Arial,sans-serif;background:#f5f5f5;color:#333;padding:20px;line-height:1.7}
-    .container{max-width:900px;margin:auto;background:#fff;padding:30px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-    h1{text-align:center;margin-bottom:10px;color:#222}
-    h2{margin-top:28px;margin-bottom:8px;color:#222}
-    p{margin-bottom:14px}
-    .subtitle{text-align:center;color:#777;margin-bottom:30px}
-    .back{display:inline-block;margin-bottom:25px;background:#007bff;color:#fff;text-decoration:none;padding:10px 16px;border-radius:4px}
-    .back:hover{background:#0056b3}
-    .highlight{background:#f0f7ff;border-left:4px solid #007bff;padding:15px;margin:20px 0}
-    .footer{text-align:center;color:#999;font-size:12px;border-top:1px solid #ddd;margin-top:35px;padding-top:20px}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+      padding-top: 20px;
+    }
+
+    .header h1 {
+      font-size: 3.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.3em;
+      opacity: 0.95;
+      margin-bottom: 5px;
+    }
+
+    .header .info {
+      font-size: 0.95em;
+      opacity: 0.85;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 50px;
+      flex-direction: row;
+    }
+
+    .nav a {
+      background: rgba(255, 255, 255, 0.95);
+      color: #667eea;
+      padding: 12px 24px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .nav a:hover {
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .content-card {
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+
+    .content-card h2 {
+      color: #667eea;
+      font-size: 1.8em;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .content-card h2:first-child {
+      margin-top: 0;
+    }
+
+    .content-card p {
+      line-height: 1.8;
+      margin-bottom: 15px;
+      color: #555;
+      font-size: 1.05em;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+      border-left: 5px solid #667eea;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 1.1em;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .content-card a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .content-card a:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+
+    .footer {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      color: #666;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      margin-top: 50px;
+    }
+
+    .footer p {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2.5em;
+      }
+
+      .header p {
+        font-size: 1.1em;
+      }
+
+      .nav {
+        gap: 10px;
+      }
+
+      .nav a {
+        padding: 10px 18px;
+        font-size: 0.9em;
+      }
+
+      .content-card {
+        padding: 25px;
+      }
+
+      .content-card h2 {
+        font-size: 1.5em;
+      }
+    }
   </style>
 </head>
 <body>
-  <main class="container">
-    <a class="back" href="index.html">← Back to Axvyn</a>
+  <div class="header">
+    <h1>⚙️ Axvyn</h1>
+    <p class="subtitle">Free Online File and Media Tools</p>
+    <p class="info">All tools work directly in your browser. Your files never leave your device.</p>
+  </div>
 
-    <h1>About Axvyn</h1>
-    <p class="subtitle">Simple tools for everyday file and media tasks</p>
+  <div class="container">
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="donate.html">Donate</a>
+    </nav>
 
-    <div class="highlight">
-      Axvyn provides easy-to-use online tools for converting, compressing,
-      and working with common files and media.
+    <div class="content-card">
+      <h2>About Axvyn</h2>
+      <p class="subtitle" style="color: #666; margin-bottom: 20px;">Simple tools for everyday file and media tasks</p>
+
+      <div class="highlight">
+        Axvyn provides easy-to-use online tools for converting, compressing,
+        and working with common files and media.
+      </div>
+
+      <h2>What Is Axvyn?</h2>
+      <p>
+        Axvyn is a collection of free browser-based tools designed to make
+        common file tasks simple and accessible. The website is intended for
+        users who want quick tools without installing complicated software.
+      </p>
+
+      <h2>Our Tools</h2>
+      <p>
+        Axvyn currently provides tools for DOCX-to-PDF conversion, image
+        compression, text-to-speech, WEBP and AVIF conversion to PNG, and PDF
+        conversion to JPG or PNG.
+      </p>
+
+      <h2>Privacy-Focused Design</h2>
+      <p>
+        Whenever possible, Axvyn processes files directly in your browser.
+        This means that browser-based tools can process files on your device
+        without sending them to a server.
+      </p>
+
+      <h2>Our Goal</h2>
+      <p>
+        Our goal is to provide useful, clear, and accessible online tools with
+        a simple interface that works on computers, tablets, and mobile devices.
+      </p>
+
+      <h2>Suggestions and Feedback</h2>
+      <p>
+        We welcome suggestions for new tools and improvements. If you have an
+        idea or find a problem, please contact us.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Email:
+        <a href="mailto:omar_elghandour@yahoo.com">omar_elghandour@yahoo.com</a>
+      </p>
     </div>
-
-    <h2>What Is Axvyn?</h2>
-    <p>
-      Axvyn is a collection of free browser-based tools designed to make
-      common file tasks simple and accessible. The website is intended for
-      users who want quick tools without installing complicated software.
-    </p>
-
-    <h2>Our Tools</h2>
-    <p>
-      Axvyn currently provides tools for DOCX-to-PDF conversion, image
-      compression, text-to-speech, WEBP and AVIF conversion to PNG, and PDF
-      conversion to JPG or PNG.
-    </p>
-
-    <h2>Privacy-Focused Design</h2>
-    <p>
-      Whenever possible, Axvyn processes files directly in your browser.
-      This means that browser-based tools can process files on your device
-      without sending them to a server.
-    </p>
-
-    <h2>Our Goal</h2>
-    <p>
-      Our goal is to provide useful, clear, and accessible online tools with
-      a simple interface that works on computers, tablets, and mobile devices.
-    </p>
-
-    <h2>Suggestions and Feedback</h2>
-    <p>
-      We welcome suggestions for new tools and improvements. If you have an
-      idea or find a problem, please contact us.
-    </p>
-
-    <h2>Contact</h2>
-    <p>
-      Email:
-      <a href="mailto:your-email@example.com">omar_elghandour@yahoo.com</a>
-    </p>
 
     <div class="footer">
-      © 2026 Axvyn. All rights reserved.
+      <p>© 2026 Axvyn. All rights reserved. Your privacy is our priority.</p>
     </div>
-  </main>
+  </div>
 </body>
 </html>

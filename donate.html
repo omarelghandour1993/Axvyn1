@@ -4,129 +4,207 @@
   <link rel="icon" type="image/png" href="Gemini_Generated_Image_hyfyiyhyfyiyhyfy.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>Donate - Axvyn</title>
-
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      background: #f5f5f5;
-      color: #333;
-      font-family: Arial, sans-serif;
-      line-height: 1.7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
       padding: 20px;
+      color: #333;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+      padding-top: 20px;
+    }
+
+    .header h1 {
+      font-size: 3.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.3em;
+      opacity: 0.95;
+      margin-bottom: 5px;
+    }
+
+    .header .info {
+      font-size: 0.95em;
+      opacity: 0.85;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 50px;
+      flex-direction: row;
+    }
+
+    .nav a {
+      background: rgba(255, 255, 255, 0.95);
+      color: #667eea;
+      padding: 12px 24px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .nav a:hover {
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
     .container {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+      max-width: 900px;
       margin: 0 auto;
-      max-width: 700px;
-      padding: 30px;
+    }
+
+    .content-card {
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
       text-align: center;
     }
 
-    .back {
-      background: #007bff;
-      border-radius: 4px;
-      color: #fff;
-      display: inline-block;
-      margin-bottom: 30px;
-      padding: 10px 16px;
-      text-decoration: none;
-    }
-
-    .back:hover {
-      background: #0056b3;
-    }
-
-    h1 {
-      color: #222;
+    .content-card h1 {
+      color: #667eea;
+      font-size: 2.5em;
       margin-bottom: 10px;
     }
 
     .subtitle {
-      color: #777;
-      margin-bottom: 25px;
+      text-align: center;
+      color: #999;
+      margin-bottom: 30px;
+      font-size: 1.1em;
     }
 
-    .donation-box {
-      background: #f8f9fa;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin-top: 25px;
-      padding: 25px;
+    .content-card p {
+      line-height: 1.8;
+      margin-bottom: 15px;
+      color: #555;
+      font-size: 1.05em;
     }
 
-    .donation-box h2 {
-      color: #222;
-      font-size: 20px;
-      margin-bottom: 10px;
+    .donation-section {
+      background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+      border-left: 5px solid #667eea;
+      padding: 30px;
+      border-radius: 12px;
+      margin-top: 30px;
     }
 
-    .donation-box p {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 22px;
+    .donation-section h2 {
+      color: #667eea;
+      font-size: 1.8em;
+      margin-bottom: 15px;
     }
 
     #paypal-container-NNE6YGULSGY5E {
-      margin: 0 auto;
+      margin: 30px auto;
       max-width: 450px;
       min-height: 45px;
     }
 
     .footer {
-      border-top: 1px solid #ddd;
-      color: #999;
-      font-size: 12px;
-      margin-top: 35px;
-      padding-top: 20px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      color: #666;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      margin-top: 50px;
     }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
+    .footer p {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2.5em;
       }
 
-      .container {
-        padding: 20px;
+      .header p {
+        font-size: 1.1em;
+      }
+
+      .nav {
+        gap: 10px;
+      }
+
+      .nav a {
+        padding: 10px 18px;
+        font-size: 0.9em;
+      }
+
+      .content-card {
+        padding: 25px;
+      }
+
+      .content-card h1 {
+        font-size: 2em;
       }
     }
   </style>
 </head>
-
 <body>
-  <main class="container">
-    <a class="back" href="index.html">← Back to Axvyn</a>
+  <div class="header">
+    <h1>⚙️ Axvyn</h1>
+    <p class="subtitle">Free Online File and Media Tools</p>
+    <p class="info">All tools work directly in your browser. Your files never leave your device.</p>
+  </div>
 
-    <h1>Support Axvyn</h1>
+  <div class="container">
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="donate.html">Donate</a>
+    </nav>
 
-    <p class="subtitle">
-      Your support helps us maintain and improve Axvyn's free online tools.
-    </p>
-
-    <section class="donation-box">
-      <h2>Make a Donation</h2>
-
-      <p>
-        Thank you for supporting Axvyn. Every contribution helps keep the
-        website available and supports future improvements.
+    <div class="content-card">
+      <h1>Support Axvyn</h1>
+      <p class="subtitle">
+        Your support helps us maintain and improve Axvyn's free online tools.
       </p>
 
-      <div id="paypal-container-NNE6YGULSGY5E"></div>
-    </section>
+      <div class="donation-section">
+        <h2>💝 Make a Donation</h2>
+        <p>
+          Thank you for supporting Axvyn. Every contribution helps keep the
+          website available and supports future improvements and new features.
+        </p>
+        <div id="paypal-container-NNE6YGULSGY5E"></div>
+      </div>
+    </div>
 
-    <footer class="footer">
-      <p>© 2026 Axvyn. All rights reserved.</p>
-    </footer>
-  </main>
+    <div class="footer">
+      <p>© 2026 Axvyn. All rights reserved. Thank you for your support!</p>
+    </div>
+  </div>
 
   <!-- PayPal Hosted Buttons SDK -->
   <script

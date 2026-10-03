@@ -6,70 +6,262 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact Us - Axvyn</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:Arial,sans-serif;background:#f5f5f5;color:#333;padding:20px;line-height:1.7}
-    .container{max-width:900px;margin:auto;background:#fff;padding:30px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-    h1{text-align:center;margin-bottom:10px;color:#222}
-    h2{margin-top:28px;margin-bottom:8px;color:#222}
-    p{margin-bottom:14px}
-    .subtitle{text-align:center;color:#777;margin-bottom:30px}
-    .back{display:inline-block;margin-bottom:25px;background:#007bff;color:#fff;text-decoration:none;padding:10px 16px;border-radius:4px}
-    .back:hover{background:#0056b3}
-    .contact-box{background:#f0f7ff;border-left:4px solid #007bff;padding:18px;margin:20px 0}
-    .email{font-size:18px;font-weight:bold}
-    .footer{text-align:center;color:#999;font-size:12px;border-top:1px solid #ddd;margin-top:35px;padding-top:20px}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 50px;
+      padding-top: 20px;
+    }
+
+    .header h1 {
+      font-size: 3.5em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.3em;
+      opacity: 0.95;
+      margin-bottom: 5px;
+    }
+
+    .header .info {
+      font-size: 0.95em;
+      opacity: 0.85;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 50px;
+      flex-direction: row;
+    }
+
+    .nav a {
+      background: rgba(255, 255, 255, 0.95);
+      color: #667eea;
+      padding: 12px 24px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .nav a:hover {
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .content-card {
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+
+    .content-card h1 {
+      color: #667eea;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #999;
+      margin-bottom: 30px;
+      font-size: 1.1em;
+    }
+
+    .content-card h2 {
+      color: #667eea;
+      font-size: 1.8em;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+
+    .content-card h2:first-of-type {
+      margin-top: 0;
+    }
+
+    .content-card p {
+      line-height: 1.8;
+      margin-bottom: 15px;
+      color: #555;
+      font-size: 1.05em;
+    }
+
+    .contact-box {
+      background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+      border-left: 5px solid #667eea;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+    }
+
+    .contact-box .email-label {
+      font-size: 0.95em;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .contact-box .email {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #667eea;
+    }
+
+    .contact-box a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .contact-box a:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+
+    .footer {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      color: #666;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      margin-top: 50px;
+    }
+
+    .footer p {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2.5em;
+      }
+
+      .header p {
+        font-size: 1.1em;
+      }
+
+      .nav {
+        gap: 10px;
+      }
+
+      .nav a {
+        padding: 10px 18px;
+        font-size: 0.9em;
+      }
+
+      .content-card {
+        padding: 25px;
+      }
+
+      .content-card h1 {
+        font-size: 2em;
+      }
+
+      .content-card h2 {
+        font-size: 1.5em;
+      }
+    }
   </style>
 </head>
 <body>
-  <main class="container">
-    <a class="back" href="index.html">← Back to Axvyn</a>
+  <div class="header">
+    <h1>⚙️ Axvyn</h1>
+    <p class="subtitle">Free Online File and Media Tools</p>
+    <p class="info">All tools work directly in your browser. Your files never leave your device.</p>
+  </div>
 
-    <h1>Contact Us</h1>
-    <p class="subtitle">We would be happy to hear from you</p>
+  <div class="container">
+    <nav class="nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="donate.html">Donate</a>
+    </nav>
 
-    <p>
-      If you have a question, suggestion, report, or request related to
-      Axvyn, please contact us by email.
-    </p>
+    <div class="content-card">
+      <h1>Contact Us</h1>
+      <p class="subtitle">We would be happy to hear from you</p>
 
-    <div class="contact-box">
-      <p>Email address:</p>
-      <p class="email">
-        <a href="mailto:omar_elghandour@yahoo.com">
-         omar_elghandour@yahoo.com
-        </a>
+      <p>
+        If you have a question, suggestion, report, or request related to
+        Axvyn, please contact us by email.
+      </p>
+
+      <div class="contact-box">
+        <p class="email-label">Email address:</p>
+        <p class="email">
+          <a href="mailto:omar_elghandour@yahoo.com">
+            omar_elghandour@yahoo.com
+          </a>
+        </p>
+      </div>
+
+      <h2>Suggestions</h2>
+      <p>
+        You can contact us with ideas for new tools, improvements to existing
+        tools, or suggestions about the website design.
+      </p>
+
+      <h2>Technical Problems</h2>
+      <p>
+        When reporting a problem, please include the name of the tool, the
+        browser you are using, and a short description of what happened.
+        Please do not send private or sensitive files unless necessary.
+      </p>
+
+      <h2>Response Time</h2>
+      <p>
+        We will try to review messages and respond as soon as reasonably
+        possible. Response times may vary.
+      </p>
+
+      <h2>Static Website Notice</h2>
+      <p>
+        This website is hosted as a static website. The contact link opens your
+        own email application using a mailto link; no message is submitted
+        through a server on this page.
       </p>
     </div>
 
-    <h2>Suggestions</h2>
-    <p>
-      You can contact us with ideas for new tools, improvements to existing
-      tools, or suggestions about the website design.
-    </p>
-
-    <h2>Technical Problems</h2>
-    <p>
-      When reporting a problem, please include the name of the tool, the
-      browser you are using, and a short description of what happened.
-      Please do not send private or sensitive files unless necessary.
-    </p>
-
-    <h2>Response Time</h2>
-    <p>
-      We will try to review messages and respond as soon as reasonably
-      possible. Response times may vary.
-    </p>
-
-    <h2>Static Website Notice</h2>
-    <p>
-      This website is hosted as a static website. The contact link opens your
-      own email application using a mailto link; no message is submitted
-      through a server on this page.
-    </p>
-
     <div class="footer">
-      © 2026 Axvyn. All rights reserved.
+      <p>© 2026 Axvyn. All rights reserved. We're here to help!</p>
     </div>
-  </main>
+  </div>
 </body>
 </html>
