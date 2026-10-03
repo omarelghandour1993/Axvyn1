@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word (.docx) to PDF - Axvyn</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #f5f5f5; color: #333; font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
+    .container { background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,.1); margin: 0 auto; max-width: 900px; padding: 30px; }
+    h1 { color: #333; font-size: 30px; margin-bottom: 10px; text-align: center; }
+    .subtitle { color: #666; font-size: 14px; margin-bottom: 12px; text-align: center; }
+    .info { color: #999; font-size: 12px; margin-bottom: 30px; text-align: center; }
+    .site-navigation { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 auto 30px; }
+    .site-navigation a { background: #007bff; border-radius: 4px; color: #fff; font-size: 13px; padding: 10px 14px; text-decoration: none; }
+    .site-navigation a:hover { background: #0056b3; }
+    .card { border: 1px solid #ddd; border-radius: 6px; margin-bottom: 20px; overflow: hidden; }
+    .card-header { background: #f0f0f0; border-bottom: 1px solid #ddd; color: #333; font-weight: bold; padding: 15px; }
+    .card-body { padding: 20px; }
+    .tool-description { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; margin-bottom: 20px; padding: 16px; }
+    .tool-description h2 { font-size: 22px; margin-bottom: 10px; }
+    .tool-description p { margin-bottom: 10px; }
+    .tool-description ul { margin-left: 20px; margin-top: 8px; }
+    label { display: block; font-size: 13px; font-weight: bold; margin: 15px 0 6px; }
+    input { border: 1px solid #ccc; border-radius: 4px; display: block; font-family: Arial, sans-serif; font-size: 14px; margin: 5px 0 15px; padding: 10px; width: 100%; }
+    button { background: #007bff; border: 0; border-radius: 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; margin: 10px 5px 0 0; padding: 10px 16px; }
+    button:hover { background: #0056b3; }
+    .msg { border-radius: 4px; display: none; font-size: 13px; margin-top: 12px; padding: 10px; }
+    .msg.show { display: block; }
+    .msg.error { background: #ffe6e6; border: 1px solid #ffb3b3; color: #a00000; }
+    .msg.success-msg { background: #e6ffe6; border: 1px solid #b3deb3; color: #087508; }
+    .footer { border-top: 1px solid #ddd; color: #999; font-size: 11px; margin-top: 40px; padding-top: 20px; text-align: center; }
+    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <h1>⚙️ Axvyn</h1>
+    <p class="subtitle">Free Online File and Media Tools</p>
+    <p class="info">Files are processed in your browser whenever possible.</p>
+
+    <nav class="site-navigation" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <section class="tool-description">
+      <h2>📄 Word (.docx) to PDF</h2>
+      <p><strong>Description:</strong> Instantly convert your Word documents (.docx) to PDF format. This tool preserves formatting and layout perfectly, making your documents portable and shareable across all devices.</p>
+      <p><strong>How to Use:</strong></p>
+      <ul>
+        <li>Click "Select Word File" and choose your .docx file</li>
+        <li>Click "Convert & Download PDF"</li>
+        <li>Your PDF will be generated and downloaded automatically</li>
+        <li>Maximum file size: 5 MB</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <div class="card-header">📄 Word (.docx) to PDF</div>
+      <div class="card-body">
+        <label for="docxFile">Select Word File:</label>
+        <input id="docxFile" type="file" accept=".docx">
+        <small>Maximum file size: 5 MB.</small>
+        <button type="button" onclick="convertDocxToPdf()">Convert &amp; Download PDF</button>
+        <div id="docxMsg" class="msg"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2024 Axvyn. All tools work in your browser.</p>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <script>
+    function showMsg(elementId, text, isError) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      element.textContent = text;
+      element.classList.add('show');
+      element.classList.remove('error', 'success-msg');
+      element.classList.add(isError ? 'error' : 'success-msg');
+    }
+    function bytesToMB(bytes) { return (bytes / 1048576).toFixed(2); }
+    function downloadFile(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+    }
+    function convertDocxToPdf() {
+      const file = document.getElementById('docxFile').files[0];
+      const messageId = 'docxMsg';
+      if (!file) { showMsg(messageId, 'Select a Word file first.', true); return; }
+      if (!file.name.toLowerCase().endsWith('.docx')) { showMsg(messageId, 'Please select a valid .docx file.', true); return; }
+      if (file.size > 5 * 1024 * 1024) { showMsg(messageId, 'File is ' + bytesToMB(file.size) + ' MB. Maximum is 5 MB.', true); return; }
+      if (typeof window.mammoth === 'undefined') { showMsg(messageId, 'The Word conversion library could not load.', true); return; }
+      if (typeof window.html2pdf === 'undefined') { showMsg(messageId, 'The PDF conversion library could not load.', true); return; }
+      showMsg(messageId, 'Converting... please wait.', false);
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        window.mammoth.convertToHtml({ arrayBuffer: event.target.result }).then(function(result) {
+          const element = document.createElement('div');
+          element.style.background = '#fff';
+          element.style.color = '#000';
+          element.style.fontFamily = 'Arial, sans-serif';
+          element.style.padding = '20px';
+          element.innerHTML = result.value;
+          const options = {
+            margin: 10,
+            filename: file.name.replace(/\.docx$/i, '') + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+          };
+          return window.html2pdf().set(options).from(element).save();
+        }).then(function() { showMsg(messageId, 'PDF downloaded successfully.', false); }).catch(function(error) { showMsg(messageId, 'Conversion failed: ' + error.message, true); });
+      };
+      reader.onerror = function() { showMsg(messageId, 'Could not read the selected file.', true); };
+      reader.readAsArrayBuffer(file);
+    }
+  </script>
+</body>
+</html>
