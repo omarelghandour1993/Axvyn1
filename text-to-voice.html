@@ -22,6 +22,13 @@
     .tool-description h2 { font-size: 22px; margin-bottom: 10px; }
     .tool-description p { margin-bottom: 10px; }
     .tool-description ul { margin-left: 20px; margin-top: 8px; }
+    .tool-details { display: grid; gap: 16px; margin: 0 0 20px; }
+    .tool-info-item { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 16px; }
+    .tool-info-item h3 { font-size: 18px; margin-bottom: 8px; }
+    .tool-info-item p { margin-bottom: 8px; }
+    .tool-info-item ol, .tool-info-item ul { margin-left: 18px; }
+    .faq-item { border-top: 1px solid #e5e5e5; margin-top: 10px; padding-top: 10px; }
+    .faq-item:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
     label { display: block; font-size: 13px; font-weight: bold; margin: 15px 0 6px; }
     textarea, input, select { border: 1px solid #ccc; border-radius: 4px; display: block; font-family: Arial, sans-serif; font-size: 14px; margin: 5px 0 15px; padding: 10px; width: 100%; }
     textarea { min-height: 110px; resize: vertical; }
@@ -42,7 +49,7 @@
     .audio-player { display: none; margin-top: 15px; width: 100%; }
     .audio-player.show { display: block; }
     .footer { border-top: 1px solid #ddd; color: #999; font-size: 11px; margin-top: 40px; padding-top: 20px; text-align: center; }
-    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .button-group { display: block; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } button { width: 100%; } }
+    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .button-group { display: block; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } }
   </style>
 </head>
 <body>
@@ -59,7 +66,7 @@
 
     <section class="tool-description">
       <h2>🔊 Text to Voice</h2>
-      <p><strong>Description:</strong> Convert any text into natural-sounding speech. Supports multiple languages and accents. Useful for accessibility, creating voice-overs, or just listening to content hands-free.</p>
+      <p><strong>Description:</strong> Convert any text into natural-sounding speech. Supports multiple languages and accents. Useful for accessibility, creating voice-overs, or just listening to content aloud.</p>
       <p><strong>How to Use:</strong></p>
       <ul>
         <li>Type or paste your text in the text area (up to 3000 characters)</li>
@@ -68,6 +75,64 @@
         <li>Click "Play Voice" to hear it, or "Create Audio" to download as MP3</li>
         <li>Click "Stop" to stop playback anytime</li>
       </ul>
+    </section>
+
+    <section class="tool-details">
+      <div class="tool-info-item">
+        <h3>What the tool does</h3>
+        <p>This tool turns text into spoken audio using browser speech support and optional downloadable audio generation. It helps people listen to written content, create narration, or make content more accessible.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>How to use it</h3>
+        <ol>
+          <li>Paste or type the text you want to hear.</li>
+          <li>Choose a language and speaking rate.</li>
+          <li>Click "Play Voice" to listen immediately.</li>
+          <li>Use "Create Audio" to generate and download an MP3 file.</li>
+          <li>Use "Stop" whenever you want to cancel playback.</li>
+        </ol>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Supported file formats</h3>
+        <p>Input: plain text. Output: browser audio playback and downloadable MP3 audio when available.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Maximum file size</h3>
+        <p>Maximum text length is 3000 characters.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Privacy and security</h3>
+        <p>Text is processed locally in your browser for playback, and the tool does not permanently store your content on the site. If you download audio, keep in mind that the generated file may be created through the browser or an audio service, so sensitive text should not be shared if privacy is critical.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>When/why someone would use it</h3>
+        <p>Use this tool for accessibility, language learning, proofreading aloud, creating quick voiceovers, or turning written notes into spoken audio while multitasking.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Short FAQ</h3>
+        <div class="faq-item">
+          <strong>Q: Does it support multiple languages?</strong>
+          <p>A: Yes. It supports a range of languages including English, Arabic, Spanish, French, German, and others.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Why is there a 3000-character limit?</strong>
+          <p>A: It keeps the voice generation quick and avoids long processing delays in the browser.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Can I download the audio?</strong>
+          <p>A: Yes. The "Create Audio" button generates a downloadable MP3 when the browser/audio service is available.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Is the content kept on the website?</strong>
+          <p>A: The site is designed to process the text in the browser without storing it permanently, but caution is still wise with sensitive content.</p>
+        </div>
+      </div>
     </section>
 
     <section class="card">

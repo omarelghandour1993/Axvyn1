@@ -22,6 +22,13 @@
     .tool-description h2 { font-size: 22px; margin-bottom: 10px; }
     .tool-description p { margin-bottom: 10px; }
     .tool-description ul { margin-left: 20px; margin-top: 8px; }
+    .tool-details { display: grid; gap: 16px; margin: 0 0 20px; }
+    .tool-info-item { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 16px; }
+    .tool-info-item h3 { font-size: 18px; margin-bottom: 8px; }
+    .tool-info-item p { margin-bottom: 8px; }
+    .tool-info-item ol, .tool-info-item ul { margin-left: 18px; }
+    .faq-item { border-top: 1px solid #e5e5e5; margin-top: 10px; padding-top: 10px; }
+    .faq-item:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
     label { display: block; font-size: 13px; font-weight: bold; margin: 15px 0 6px; }
     input { border: 1px solid #ccc; border-radius: 4px; display: block; font-family: Arial, sans-serif; font-size: 14px; margin: 5px 0 15px; padding: 10px; width: 100%; }
     input[type="range"] { padding: 0; }
@@ -58,6 +65,63 @@
         <li>Your compressed image will be downloaded as JPG</li>
         <li>Maximum file size: 20 MB</li>
       </ul>
+    </section>
+
+    <section class="tool-details">
+      <div class="tool-info-item">
+        <h3>What the tool does</h3>
+        <p>This tool reduces the file size of images while trying to keep the visual quality as high as possible. It is useful when you want to upload photos faster, save storage space, or make images easier to share.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>How to use it</h3>
+        <ol>
+          <li>Select an image from your device.</li>
+          <li>Adjust the quality slider to choose a balance between smaller file size and sharper image quality.</li>
+          <li>Click "Compress & Download".</li>
+          <li>Save the generated JPG file to your computer.</li>
+        </ol>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Supported file formats</h3>
+        <p>Any image format supported by your browser, including JPG, PNG, WEBP, GIF, BMP, and AVIF. The output is downloaded as a JPG file.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Maximum file size</h3>
+        <p>20 MB per image.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Privacy and security</h3>
+        <p>Image compression happens locally in your browser. Your file is not uploaded to a server and is not stored permanently on this website, which helps protect privacy and keeps sensitive content on your device.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>When/why someone would use it</h3>
+        <p>Use this tool when preparing photos for a website, email attachment, cloud upload, social media post, or mobile sharing. It is especially helpful when a large image is slowing down uploads or taking up too much space.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Short FAQ</h3>
+        <div class="faq-item">
+          <strong>Q: Will the image become blurry?</strong>
+          <p>A: It can if you choose a very low quality setting. The slider lets you find a balance between file size and quality.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Why does the output become JPG?</strong>
+          <p>A: JPG is widely supported and usually gives the best balance of size and quality for photos and web use.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Is my file uploaded anywhere?</strong>
+          <p>A: No. The conversion is done in your browser, so the file stays on your device.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: What if my image is larger than 20 MB?</strong>
+          <p>A: You can resize or crop it before uploading, or use a different tool to reduce the file first.</p>
+        </div>
+      </div>
     </section>
 
     <section class="card">

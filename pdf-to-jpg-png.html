@@ -22,6 +22,13 @@
     .tool-description h2 { font-size: 22px; margin-bottom: 10px; }
     .tool-description p { margin-bottom: 10px; }
     .tool-description ul { margin-left: 20px; margin-top: 8px; }
+    .tool-details { display: grid; gap: 16px; margin: 0 0 20px; }
+    .tool-info-item { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 16px; }
+    .tool-info-item h3 { font-size: 18px; margin-bottom: 8px; }
+    .tool-info-item p { margin-bottom: 8px; }
+    .tool-info-item ol, .tool-info-item ul { margin-left: 18px; }
+    .faq-item { border-top: 1px solid #e5e5e5; margin-top: 10px; padding-top: 10px; }
+    .faq-item:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
     label { display: block; font-size: 13px; font-weight: bold; margin: 15px 0 6px; }
     input, select { border: 1px solid #ccc; border-radius: 4px; display: block; font-family: Arial, sans-serif; font-size: 14px; margin: 5px 0 15px; padding: 10px; width: 100%; }
     button { background: #007bff; border: 0; border-radius: 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; margin: 10px 5px 0 0; padding: 10px 16px; }
@@ -32,7 +39,7 @@
     .msg.error { background: #ffe6e6; border: 1px solid #ffb3b3; color: #a00000; }
     .msg.success-msg { background: #e6ffe6; border: 1px solid #b3deb3; color: #087508; }
     .footer { border-top: 1px solid #ddd; color: #999; font-size: 11px; margin-top: 40px; padding-top: 20px; text-align: center; }
-    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } button { width: 100%; } }
+    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } }
   </style>
 </head>
 <body>
@@ -59,6 +66,64 @@
         <li>Each page becomes a separate image file</li>
         <li>Maximum file size: 5 MB</li>
       </ul>
+    </section>
+
+    <section class="tool-details">
+      <div class="tool-info-item">
+        <h3>What the tool does</h3>
+        <p>This tool converts each page of a PDF into a JPG or PNG image so you can preview, share, or edit individual pages more easily. It is especially useful when you need a page snapshot without opening the full document.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>How to use it</h3>
+        <ol>
+          <li>Select a PDF file from your device.</li>
+          <li>Choose the output format: JPG or PNG.</li>
+          <li>Pick the image quality level you want.</li>
+          <li>Click "Convert & Download Images".</li>
+          <li>Your browser will generate and download one image per PDF page.</li>
+        </ol>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Supported file formats</h3>
+        <p>Input: PDF files. Output: JPG (.jpg) or PNG (.png) images.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Maximum file size</h3>
+        <p>5 MB per PDF file.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Privacy and security</h3>
+        <p>The PDF is processed in your browser using a local PDF renderer. The file is not uploaded to a remote server and is not permanently stored on the site, helping keep your documents private.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>When/why someone would use it</h3>
+        <p>Use this tool when you need to share one page of a report, create a thumbnail for a PDF, or turn a document into images for editing, posting, or presentation use.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Short FAQ</h3>
+        <div class="faq-item">
+          <strong>Q: Will each page download as a separate file?</strong>
+          <p>A: Yes. Every page in the PDF is converted into its own image file.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Which format should I choose?</strong>
+          <p>A: PNG is better for sharp graphics and text, while JPG is usually smaller and easier for quick sharing.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Is this safe for confidential documents?</strong>
+          <p>A: Yes, the conversion happens locally in the browser, so the file stays on your device.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: What if the PDF is larger than 5 MB?</strong>
+          <p>A: You may need to reduce the file size or split the PDF into smaller documents before converting.</p>
+        </div>
+      </div>
     </section>
 
     <section class="card">

@@ -22,6 +22,13 @@
     .tool-description h2 { font-size: 22px; margin-bottom: 10px; }
     .tool-description p { margin-bottom: 10px; }
     .tool-description ul { margin-left: 20px; margin-top: 8px; }
+    .tool-details { display: grid; gap: 16px; margin: 0 0 20px; }
+    .tool-info-item { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 16px; }
+    .tool-info-item h3 { font-size: 18px; margin-bottom: 8px; }
+    .tool-info-item p { margin-bottom: 8px; }
+    .tool-info-item ol, .tool-info-item ul { margin-left: 18px; }
+    .faq-item { border-top: 1px solid #e5e5e5; margin-top: 10px; padding-top: 10px; }
+    .faq-item:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
     label { display: block; font-size: 13px; font-weight: bold; margin: 15px 0 6px; }
     input { border: 1px solid #ccc; border-radius: 4px; display: block; font-family: Arial, sans-serif; font-size: 14px; margin: 5px 0 15px; padding: 10px; width: 100%; }
     button { background: #007bff; border: 0; border-radius: 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; margin: 10px 5px 0 0; padding: 10px 16px; }
@@ -32,7 +39,7 @@
     .msg.error { background: #ffe6e6; border: 1px solid #ffb3b3; color: #a00000; }
     .msg.success-msg { background: #e6ffe6; border: 1px solid #b3deb3; color: #087508; }
     .footer { border-top: 1px solid #ddd; color: #999; font-size: 11px; margin-top: 40px; padding-top: 20px; text-align: center; }
-    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } button { width: 100%; } }
+    @media (max-width: 600px) { body { padding: 10px; } .container { padding: 18px; } .site-navigation { display: block; } .site-navigation a { display: block; margin-bottom: 8px; text-align: center; } }
   </style>
 </head>
 <body>
@@ -49,7 +56,7 @@
 
     <section class="tool-description">
       <h2>🔄 WEBP / AVIF to PNG Converter</h2>
-      <p><strong>Description:</strong> Convert modern image formats (WEBP and AVIF) to PNG, which is universally supported. Perfect for ensuring compatibility with older software or systems that don't support newer formats.</p>
+      <p><strong>Description:</strong> Convert modern image formats (WEBP and AVIF) to PNG, which is universally supported. Perfect for ensuring compatibility with older software or systems that don't support modern formats.</p>
       <p><strong>How to Use:</strong></p>
       <ul>
         <li>Click "Select WEBP or AVIF Image" to choose your file</li>
@@ -58,6 +65,62 @@
         <li>Maximum file size: 20 MB</li>
         <li>Conversion happens instantly in your browser</li>
       </ul>
+    </section>
+
+    <section class="tool-details">
+      <div class="tool-info-item">
+        <h3>What the tool does</h3>
+        <p>This tool converts WEBP and AVIF files into PNG format so the images can be opened by more platforms, apps, and old design tools that may not support newer image standards.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>How to use it</h3>
+        <ol>
+          <li>Select a WEBP or AVIF file from your device.</li>
+          <li>Click "Convert & Download PNG".</li>
+          <li>The browser converts the image and downloads the resulting PNG file.</li>
+        </ol>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Supported file formats</h3>
+        <p>Input: WEBP (.webp) and AVIF (.avif). Output: PNG (.png).</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Maximum file size</h3>
+        <p>20 MB per file.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Privacy and security</h3>
+        <p>The file conversion happens locally in your browser. Your image is not uploaded to a server, so your content stays on your device while the conversion is performed.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>When/why someone would use it</h3>
+        <p>Use this tool when you need maximum compatibility with older software, when sharing images with people on unsupported platforms, or when you want a PNG version that is easy to edit and view everywhere.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Short FAQ</h3>
+        <div class="faq-item">
+          <strong>Q: Why convert to PNG instead of leaving the file as WEBP or AVIF?</strong>
+          <p>A: PNG has broader compatibility, especially with older applications and workflows that do not recognize newer formats.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Does it preserve image quality?</strong>
+          <p>A: PNG preserves image quality well and keeps transparency, though file sizes can be larger than the original modern formats.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Is my image stored online?</strong>
+          <p>A: No. The conversion is done locally in the browser.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: What if the image is larger than 20 MB?</strong>
+          <p>A: You can resize or compress the original image before conversion.</p>
+        </div>
+      </div>
     </section>
 
     <section class="card">

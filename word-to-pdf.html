@@ -22,6 +22,13 @@
     .tool-description h2 { font-size: 22px; margin-bottom: 10px; }
     .tool-description p { margin-bottom: 10px; }
     .tool-description ul { margin-left: 20px; margin-top: 8px; }
+    .tool-details { display: grid; gap: 16px; margin: 0 0 20px; }
+    .tool-info-item { background: #f9f9f9; border: 1px solid #eee; border-radius: 6px; padding: 16px; }
+    .tool-info-item h3 { font-size: 18px; margin-bottom: 8px; }
+    .tool-info-item p { margin-bottom: 8px; }
+    .tool-info-item ol, .tool-info-item ul { margin-left: 18px; }
+    .faq-item { border-top: 1px solid #e5e5e5; margin-top: 10px; padding-top: 10px; }
+    .faq-item:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
     label { display: block; font-size: 13px; font-weight: bold; margin: 15px 0 6px; }
     input { border: 1px solid #ccc; border-radius: 4px; display: block; font-family: Arial, sans-serif; font-size: 14px; margin: 5px 0 15px; padding: 10px; width: 100%; }
     button { background: #007bff; border: 0; border-radius: 4px; color: white; cursor: pointer; font-size: 14px; font-weight: bold; margin: 10px 5px 0 0; padding: 10px 16px; }
@@ -48,7 +55,7 @@
 
     <section class="tool-description">
       <h2>📄 Word (.docx) to PDF</h2>
-      <p><strong>Description:</strong> Instantly convert your Word documents (.docx) to PDF format. This tool preserves formatting and layout perfectly, making your documents portable and shareable across all devices.</p>
+      <p><strong>Description:</strong> Instantly convert your Word documents (.docx) to PDF format. This tool preserves formatting and layout perfectly, making your documents portable and shareable.</p>
       <p><strong>How to Use:</strong></p>
       <ul>
         <li>Click "Select Word File" and choose your .docx file</li>
@@ -56,6 +63,62 @@
         <li>Your PDF will be generated and downloaded automatically</li>
         <li>Maximum file size: 5 MB</li>
       </ul>
+    </section>
+
+    <section class="tool-details">
+      <div class="tool-info-item">
+        <h3>What the tool does</h3>
+        <p>This tool converts a Microsoft Word document (.docx) into a PDF while preserving the formatting and layout as closely as possible. It is helpful for sending documents that should look the same on every device.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>How to use it</h3>
+        <ol>
+          <li>Select a .docx file from your device.</li>
+          <li>Click "Convert & Download PDF".</li>
+          <li>The browser converts the Word file and downloads the PDF automatically.</li>
+        </ol>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Supported file formats</h3>
+        <p>Input: Word document (.docx). Output: PDF (.pdf).</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Maximum file size</h3>
+        <p>5 MB per document.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Privacy and security</h3>
+        <p>This conversion happens in the browser, so your document is not uploaded to a server or permanently stored by the site. This makes it a safer option for handling personal or business documents.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>When/why someone would use it</h3>
+        <p>Use this tool when you need to send a document as a fixed-layout file, protect formatting across devices, or prepare files for print, email, or sharing with clients.</p>
+      </div>
+
+      <div class="tool-info-item">
+        <h3>Short FAQ</h3>
+        <div class="faq-item">
+          <strong>Q: Does it keep the same formatting?</strong>
+          <p>A: It keeps the structure and layout as close as possible, though very complex documents may need minor adjustments.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Can I use it for large files?</strong>
+          <p>A: The tool supports files up to 5 MB. Larger documents may need to be split or compressed first.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Is my file uploaded online?</strong>
+          <p>A: No. The conversion is handled locally in the browser.</p>
+        </div>
+        <div class="faq-item">
+          <strong>Q: Why convert to PDF?</strong>
+          <p>A: PDF is a universal format that preserves layout and is easier to share across devices and systems.</p>
+        </div>
+      </div>
     </section>
 
     <section class="card">
