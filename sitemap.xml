@@ -1,82 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Home Page -->
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/index.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  
-  <!-- Tools -->
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/word-to-pdf.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/image-compressor.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/text-to-voice.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/pdf-to-jpg-png.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/webp-avif-to-png.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <!-- Information Pages -->
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/about.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/contact.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/privacy.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/disclaimer.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://omarelghandour1993.github.io/Axvyn1/donate.html</loc>
-    <lastmod>2024-10-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
+<url>
+<loc>https://axvyn.xyz/</loc>
+<priority>1.0</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/word-to-pdf.html</loc>
+<priority>0.9</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/image-compressor.html</loc>
+<priority>0.9</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/text-to-voice.html</loc>
+<priority>0.9</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/pdf-to-jpg-png.html</loc>
+<priority>0.9</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/webp-avif-to-png.html</loc>
+<priority>0.9</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/about.html</loc>
+<priority>0.8</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/contact.html</loc>
+<priority>0.8</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/privacy.html</loc>
+<priority>0.7</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/disclaimer.html</loc>
+<priority>0.7</priority>
+</url>
+
+<url>
+<loc>https://axvyn.xyz/donate.html</loc>
+<priority>0.8</priority>
+</url>
+
 </urlset>
