@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://github.com/omarelghandour1993/Axvyn1/raw/main/sitemap.xml
+Sitemap: Sitemap: https://axvyn.xyz/sitemap.xml
 
 # Specific crawl directives
 User-agent: Googlebot
