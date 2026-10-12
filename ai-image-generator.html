@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Generate free AI images from text with Axvyn.">
+  <title>Free AI Image Generator - Axvyn</title>
+  <link rel="canonical" href="https://axvyn.xyz/ai-image-generator.html">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      color: #202124;
+      background: #f7f8fa;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1, .intro { text-align: center; }
+
+    .intro {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    .frame-wrap {
+      margin-top: 24px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: white;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 780px;
+      border: 0;
+    }
+
+    .download-area {
+      margin-top: 20px;
+      padding: 18px;
+      text-align: center;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: 0;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover { background: #1d4ed8; }
+
+    #status {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      iframe { height: 750px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Free AI Image Generator</h1>
+
+    <p class="intro">
+      Turn your text prompts into images using Perchance.
+      No Axvyn account is required.
+    </p>
+
+    <div class="frame-wrap">
+      <iframe
+        src="https://perchance.org/ai-text-to-image-generator"
+        title="Perchance AI Image Generator"
+        loading="lazy"
+        allow="fullscreen"
+        referrerpolicy="strict-origin-when-cross-origin">
+      </iframe>
+    </div>
+
+    <section class="download-area">
+      <h2>Download your image</h2>
+      <p id="status">
+        Generate an image above. Direct downloading from the embedded
+        generator has not yet been connected.
+      </p>
+
+      <button id="downloadBtn" type="button">
+        Download image
+      </button>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", () => {
+      document.getElementById("status").textContent =
+        "For now, use the download control provided by Perchance. " +
+        "Axvyn cannot yet access the generated image inside the embedded frame.";
+    });
+  </script>
+</body>
+</html>
