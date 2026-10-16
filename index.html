@@ -9,7 +9,7 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-93X8CMXBS1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){dataLayer.push(arguments);} 
   gtag('js', new Date());
 
   gtag('config', 'G-93X8CMXBS1');
@@ -120,6 +120,15 @@
       padding: 25px;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tool-icon svg {
+      width: 48px;
+      height: 48px;
+      display: block;
     }
 
     .tool-content {
@@ -212,7 +221,6 @@
 /* Make the audio converter match the other tool cards */
 .tools-grid > .tool-card {
     width: 100%;
-     max-width: 475px;
     min-width: 0;
     box-sizing: border-box;
 }
@@ -306,33 +314,23 @@
           <a href="pdf-to-jpg-png.html" class="tool-link">Open Tool →</a>
         </div>
       </div>
-    </div>
 
-       <!-- Audio to MP3 Converter -->
-<a href="axvyn-audio-to-mp3.html" class="tool-card">
-<div class="tool-card">
-    <div class="tool-icon">
-    
-<svg viewBox="0 0 64 64" width="64" height="64"
-     fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="4" width="56" height="56" rx="0"
-          stroke="currentColor" stroke-width="3"/>
-    <path d="M10 32h7l5-12 8 24 8-20 6 16 5-8h5"
-          stroke="currentColor" stroke-width="3"
-          stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+      <!-- Audio to MP3 Converter -->
+      <div class="tool-card">
+        <div class="tool-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="56" height="56" rx="0" stroke="currentColor" stroke-width="3"/>
+            <path d="M10 32h7l5-12 8 24 8-20 6 16 5-8h5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="tool-content">
+          <div class="tool-title">Audio to MP3 Converter</div>
+          <div class="tool-description">Convert M4A, WAV and FLAC audio files into high-quality 320 kbps MP3 files directly in your browser.</div>
+          <a href="axvyn-audio-to-mp3.html" class="tool-link">Open Tool →</a>
+        </div>
+      </div>
 
     </div>
-    <div class="tool-content">
-        <h3>Audio to MP3 Converter</h3>
-        <p>Convert M4A, WAV and FLAC audio files into high-quality
-           320 kbps MP3 files directly in your browser.</p>
-        <a href="axvyn-audio-to-mp3.html" class="tool-link">
-            Open Tool →
-        </a>
-    </div>
-</div>
-
 
     <div class="footer">
       <p>© 2026 Axvyn. All tools work in your browser. Files are processed locally and never uploaded to servers.</p>
