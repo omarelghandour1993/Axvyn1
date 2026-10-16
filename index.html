@@ -208,6 +208,34 @@
         padding: 20px;
       }
     }
+
+/* Make the audio converter match the other tool cards */
+.tools-grid > .tool-card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+}
+
+@media (max-width: 900px) {
+    .tools-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+       
   </style>
 </head>
 <body>
