@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Convert M4A, WAV, and FLAC audio files to high-bitrate 320 kbps MP3 directly in your browser. Free, private, and no account required.">
+<title>Audio to MP3 Converter | Axvyn</title>
+<style>
+:root{color-scheme:light;--ink:#172033;--muted:#64748b;--line:#dbe3ee;--surface:#f6f8fb;--brand:#2457d6;--brand-dark:#1744b5;--good:#147d4b;--bad:#b42318}
+*{box-sizing:border-box}body{margin:0;background:#f6f8fb;color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.wrap{width:min(940px,calc(100% - 32px));margin:36px auto 60px}.eyebrow{font-size:.82rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase;color:var(--brand)}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.12;margin:.4rem 0 1rem;letter-spacing:-.035em}h2{font-size:1.35rem;line-height:1.25;margin:0 0 .7rem}p{margin:.45rem 0 1rem}.lead{font-size:1.1rem;color:#475569;max-width:720px}.panel,.info{background:#fff;border:1px solid var(--line);border-radius:18px;padding:clamp(18px,4vw,30px);box-shadow:0 8px 28px #18294a0a}.panel{margin:26px 0}.drop{border:2px dashed #b8c8e4;border-radius:14px;padding:28px 18px;text-align:center;background:#fbfdff;transition:.15s}.drop.drag{border-color:var(--brand);background:#eef4ff}.file-icon{font-size:2rem}.muted{color:var(--muted);font-size:.93rem}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:10px;padding:12px 18px;font-weight:750;font-size:1rem;cursor:pointer;text-decoration:none;transition:background .15s,transform .15s}.btn:focus-visible,input:focus-visible{outline:3px solid #91b4ff;outline-offset:3px}.primary{background:var(--brand);color:#fff}.primary:hover{background:var(--brand-dark)}.secondary{background:#eaf0fb;color:#17356e}.btn:disabled{opacity:.48;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.fileline{display:none;text-align:left;background:#f6f8fb;border:1px solid var(--line);padding:12px 14px;border-radius:10px;margin-top:14px;overflow-wrap:anywhere}.status{margin:14px 0 0;min-height:1.5em;font-weight:650}.status.error{color:var(--bad)}.status.success{color:var(--good)}.progress-wrap{display:none;margin-top:20px}.progress-top{display:flex;justify-content:space-between;gap:12px;font-size:.92rem;font-weight:700;margin-bottom:8px}.track{height:12px;background:#e6ebf3;border-radius:99px;overflow:hidden}.bar{height:100%;width:0;background:var(--brand);border-radius:99px;transition:width .2s}.time-row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;color:var(--muted);font-size:.9rem;margin-top:8px}.download{display:none;margin-top:18px;padding:16px;background:#eefaf3;border:1px solid #c6ebd4;border-radius:12px;text-align:center}.download .btn{background:var(--good);color:white}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:18px}.mini{background:var(--surface);border-radius:12px;padding:16px}.mini strong{display:block;margin-bottom:4px}.steps{padding-left:1.3rem}.steps li{padding:.25rem 0}.faq details{border-top:1px solid var(--line);padding:14px 0}.faq summary{font-weight:750;cursor:pointer}.note{font-size:.9rem;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:.9rem;margin-top:28px}a{color:var(--brand)}
+@media(max-width:560px){.wrap{margin-top:24px}.btn{width:100%}.actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Axvyn · Free browser tool</div>
+  <h1>Audio to MP3 Converter</h1>
+  <p class="lead">Convert M4A, WAV, and FLAC audio files into MP3 at 320 kbps. Your file is processed locally in your browser, so it is not uploaded to an Axvyn server.</p>
+
+  <section class="panel" aria-labelledby="convert-title">
+    <h2 id="convert-title">Convert your audio</h2>
+    <p class="muted">Supported formats: M4A, WAV, FLAC · Maximum input size: 200 MB · Output: MP3, 320 kbps</p>
+    <div class="drop" id="dropZone">
+      <div class="file-icon" aria-hidden="true">♫</div>
+      <p><strong>Choose an audio file or drag it here</strong></p>
+      <p class="muted">Your audio stays on your device. The converter engine is downloaded from a public CDN the first time you use it.</p>
+      <div class="actions"><button class="btn primary" id="chooseBtn" type="button">Choose audio file</button></div>
+      <input id="fileInput" type="file" accept=".m4a,.wav,.flac,audio/mp4,audio/x-m4a,audio/wav,audio/x-wav,audio/flac,audio/x-flac">
+      <div class="fileline" id="fileLine"></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="convertBtn" type="button" disabled>Convert to MP3</button>
+      <button class="btn secondary" id="resetBtn" type="button">Reset</button>
+    </div>
+    <p class="status" id="status" role="status" aria-live="polite">Choose a file to begin.</p>
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-top"><span id="progressLabel">Preparing converter…</span><span id="percent">0%</span></div>
+      <div class="track" role="progressbar" aria-label="Conversion progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><div class="bar" id="progressBar"></div></div>
+      <div class="time-row"><span id="elapsed">Elapsed: 00:00</span><span id="remaining">Time remaining: estimating…</span></div>
+    </div>
+    <div class="download" id="downloadBox">
+      <strong>Your MP3 is ready.</strong>
+      <p class="muted" id="outputInfo">320 kbps MP3</p>
+      <a class="btn" id="downloadBtn" href="#" download="converted.mp3">Download MP3</a>
+    </div>
+    <p class="note">Large files may need substantial memory and processing time. The 200 MB limit is a maximum, not a guarantee that every device can convert a file of that size.</p>
+  </section>
+
+  <section class="info" aria-labelledby="about-title">
+    <h2 id="about-title">About the free MP3 converter</h2>
+    <p>Axvyn’s Audio to MP3 Converter turns common audio formats into MP3 files that are compatible with phones, computers, music players, car stereos, and many editing applications. It is designed for people who need a widely supported audio format without installing desktop software or creating an account.</p>
+    <div class="grid">
+      <div class="mini"><strong>M4A to MP3</strong>Convert compatible M4A audio files, including many AAC-encoded recordings, into MP3.</div>
+      <div class="mini"><strong>WAV to MP3</strong>Compress large, often uncompressed WAV recordings into a smaller, convenient MP3 file.</div>
+      <div class="mini"><strong>FLAC to MP3</strong>Convert lossless FLAC audio into a more widely supported MP3 format. MP3 is lossy, so it will not retain all the original audio data.</div>
+      <div class="mini"><strong>320 kbps output</strong>Choose a high MP3 bitrate for compatible playback. A higher output bitrate cannot restore quality already missing from the original recording.</div>
+    </div>
+    <h2 style="margin-top:24px">How to convert audio files</h2>
+    <ol class="steps">
+      <li>Select an M4A, WAV, or FLAC file no larger than 200 MB.</li>
+      <li>Click <strong>Convert to MP3</strong>. On the first use, your browser will load the conversion engine; this may take a little time.</li>
+      <li>Watch the progress bar, elapsed time, and estimated remaining time while the file is processed.</li>
+      <li>When conversion finishes, click <strong>Download MP3</strong> to save the output to your device.</li>
+    </ol>
+    <h2 style="margin-top:24px">Privacy and limitations</h2>
+    <p>Audio processing happens in your browser using WebAssembly. The selected audio file is not sent to Axvyn’s server by this page. Your browser does download the converter code from a third-party CDN. Keep this page open until the conversion and download are complete.</p>
+    <p>Conversion speed depends on file duration, codec, device memory, CPU performance, and browser limits. The countdown is an estimate based on observed progress and may change during conversion. The output is encoded at 320 kbps when the chosen MP3 encoder is available; it does not guarantee a better-sounding result than the source.</p>
+    <div class="faq">
+      <h2 style="margin-top:24px">Frequently asked questions</h2>
+      <details><summary>Is this tool free?</summary><p>Yes. The page has no account or per-file fee. It relies on open-source browser conversion software and a public CDN to load the engine.</p></details>
+      <details><summary>Are my files uploaded?</summary><p>No. The audio file is read and processed in your browser. The converter library itself is downloaded from a CDN, but your chosen audio file is not uploaded by this tool.</p></details>
+      <details><summary>Will every 200 MB file convert?</summary><p>Not necessarily. Browsers may use several times the file size in working memory. If a large file fails, try a smaller file or a device with more available memory.</p></details>
+      <details><summary>Does 320 kbps improve low-quality audio?</summary><p>No. It sets the MP3 encoding bitrate. It cannot recreate details that were not present in the original audio.</p></details>
+    </div>
+  </section>
+  <footer>© <span id="year"></span> Axvyn · Free online tools</footer>
+</main>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+<script>
+(() => {
+  'use strict';
+  const MAX_BYTES = 200 * 1024 * 1024;
+  const ALLOWED = new Set(['m4a', 'wav', 'flac']);
+  const $ = id => document.getElementById(id);
+  const input = $('fileInput'), chooseBtn = $('chooseBtn'), convertBtn = $('convertBtn'), resetBtn = $('resetBtn');
+  const dropZone = $('dropZone'), fileLine = $('fileLine'), status = $('status');
+  const progressWrap = $('progressWrap'), progressBar = $('progressBar'), progressTrack = $('progressTrack');
+  const progressLabel = $('progressLabel'), percent = $('percent'), elapsedLabel = $('elapsed'), remainingLabel = $('remaining');
+  const downloadBox = $('downloadBox'), downloadBtn = $('downloadBtn'), outputInfo = $('outputInfo');
+  $('year').textContent = new Date().getFullYear();
+
+  let selectedFile = null, ffmpeg = null, enginePromise = null, outputUrl = null;
+  let startTime = 0, latestProgress = 0, ticker = null, converting = false;
+  const fmtTime = seconds => {
+    if (!Number.isFinite(seconds) || seconds < 0) return '—';
+    seconds = Math.floor(seconds);
+    const h = Math.floor(seconds / 3600), m = Math.floor((seconds % 3600) / 60), s = seconds % 60;
+    return h ? `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}` : `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  };
+  const fmtBytes = bytes => bytes < 1024*1024 ? `${(bytes/1024).toFixed(1)} KB` : `${(bytes/(1024*1024)).toFixed(2)} MB`;
+  function setStatus(message, kind='') { status.textContent = message; status.className = `status ${kind}`.trim(); }
+  function clearOutput() {
+    if (outputUrl) URL.revokeObjectURL(outputUrl);
+    outputUrl = null; downloadBtn.removeAttribute('href'); downloadBox.style.display = 'none';
+  }
+  function updateProgress(ratio) {
+    if (!Number.isFinite(ratio)) return;
+    latestProgress = Math.max(latestProgress, Math.min(0.995, Math.max(0, ratio)));
+    const pct = Math.floor(latestProgress * 100);
+    progressBar.style.width = `${pct}%`; percent.textContent = `${pct}%`;
+    progressTrack.setAttribute('aria-valuenow', String(pct));
+    if (latestProgress > 0.02) {
+      const elapsed = (Date.now() - startTime) / 1000;
+      const eta = elapsed * (1 - latestProgress) / latestProgress;
+      remainingLabel.textContent = `Time remaining: about ${fmtTime(eta)}`;
+    } else remainingLabel.textContent = 'Time remaining: estimating…';
+  }
+  function startTicker() {
+    clearInterval(ticker);
+    ticker = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      elapsedLabel.textContent = `Elapsed: ${fmtTime(elapsed)}`;
+      if (latestProgress > 0.02) {
+        const eta = elapsed * (1 - latestProgress) / latestProgress;
+        remainingLabel.textContent = `Time remaining: about ${fmtTime(eta)}`;
+      }
+    }, 500);
+  }
+  function stopTicker() { clearInterval(ticker); ticker = null; }
+  function chooseFile(file) {
+    if (!file) return;
+    clearOutput();
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    if (!ALLOWED.has(ext)) { selectedFile = null; input.value = ''; fileLine.style.display='none'; convertBtn.disabled=true; setStatus('Unsupported format. Please choose an M4A, WAV, or FLAC file.', 'error'); return; }
+    if (file.size > MAX_BYTES) { selectedFile = null; input.value = ''; fileLine.style.display='none'; convertBtn.disabled=true; setStatus('This file is larger than the 200 MB limit. Choose a smaller file.', 'error'); return; }
+    if (file.size === 0) { selectedFile = null; convertBtn.disabled=true; setStatus('This file is empty. Please choose another file.', 'error'); return; }
+    selectedFile = file; fileLine.style.display='block';
+    fileLine.textContent = `${file.name} · ${fmtBytes(file.size)}`;
+    convertBtn.disabled = false;
+    setStatus('File ready. Click “Convert to MP3” when you are ready.');
+    progressWrap.style.display='none';
+  }
+  chooseBtn.addEventListener('click', () => input.click());
+  input.addEventListener('change', () => chooseFile(input.files && input.files[0]));
+  ['dragenter','dragover'].forEach(name => dropZone.addEventListener(name, e => {e.preventDefault(); dropZone.classList.add('drag');}));
+  ['dragleave','drop'].forEach(name => dropZone.addEventListener(name, e => {e.preventDefault(); dropZone.classList.remove('drag');}));
+  dropZone.addEventListener('drop', e => chooseFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]));
+
+  async function loadEngine() {
+    if (ffmpeg && ffmpeg.isLoaded()) return ffmpeg;
+    if (enginePromise) return enginePromise;
+    if (!window.FFmpeg || !window.FFmpeg.createFFmpeg) throw new Error('The conversion library did not load. Check your internet connection or try again later.');
+    enginePromise = (async () => {
+      const { createFFmpeg } = window.FFmpeg;
+      const instance = createFFmpeg({
+        log: true,
+        mainName: 'main',
+        corePath: 'https://unpkg.com/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js',
+        logger: ({ message }) => {
+          const match = /time=(\d+):(\d+):(\d+(?:\.\d+)?)/.exec(message || '');
+          const durMatch = /Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)/.exec(message || '');
+          if (durMatch) instance.__duration = Number(durMatch[1])*3600 + Number(durMatch[2])*60 + Number(durMatch[3]);
+          if (match && instance.__duration > 0) {
+            const current = Number(match[1])*3600 + Number(match[2])*60 + Number(match[3]);
+            updateProgress(current / instance.__duration);
+          }
+        }
+      });
+      if (typeof instance.setProgress === 'function') instance.setProgress(({ ratio }) => updateProgress(ratio));
+      progressLabel.textContent = 'Loading conversion engine…';
+      await instance.load();
+      ffmpeg = instance;
+      return ffmpeg;
+    })();
+    try { return await enginePromise; }
+    catch (err) { enginePromise = null; throw err; }
+  }
+
+  convertBtn.addEventListener('click', async () => {
+    if (!selectedFile || converting) return;
+    converting = true; convertBtn.disabled = true; chooseBtn.disabled = true; resetBtn.disabled = true;
+    clearOutput(); latestProgress = 0; startTime = Date.now(); progressWrap.style.display='block'; progressLabel.textContent='Preparing conversion…';
+    progressBar.style.width='0%'; percent.textContent='0%'; progressTrack.setAttribute('aria-valuenow','0'); elapsedLabel.textContent='Elapsed: 00:00'; remainingLabel.textContent='Time remaining: estimating…'; startTicker();
+    try {
+      setStatus('Loading the browser-based conversion engine. The first load may take a little while.');
+      const engine = await loadEngine();
+      const ext = selectedFile.name.split('.').pop().toLowerCase();
+      const inputName = `axvyn_input.${ext}`;
+      const outputName = 'axvyn_converted.mp3';
+      try { engine.FS('unlink', inputName); } catch (_) {}
+      try { engine.FS('unlink', outputName); } catch (_) {}
+      progressLabel.textContent='Converting audio to 320 kbps MP3…';
+      setStatus('Converting locally in your browser. Keep this tab open.');
+      engine.__duration = 0;
+      engine.FS('writeFile', inputName, await window.FFmpeg.fetchFile(selectedFile));
+      await engine.run('-i', inputName, '-vn', '-map_metadata', '0', '-codec:a', 'libmp3lame', '-b:a', '320k', '-y', outputName);
+      const data = engine.FS('readFile', outputName);
+      const blob = new Blob([data.buffer], { type: 'audio/mpeg' });
+      outputUrl = URL.createObjectURL(blob);
+      const baseName = selectedFile.name.replace(/\.[^.]+$/, '').replace(/[\\/:*?"<>|]/g, '_') || 'audio';
+      downloadBtn.href = outputUrl; downloadBtn.download = `${baseName}.mp3`;
+      outputInfo.textContent = `MP3 · 320 kbps target bitrate · ${fmtBytes(blob.size)}`;
+      downloadBox.style.display='block'; progressBar.style.width='100%'; percent.textContent='100%'; progressTrack.setAttribute('aria-valuenow','100');
+      progressLabel.textContent='Conversion complete'; remainingLabel.textContent='Time remaining: 00:00';
+      setStatus('Conversion complete. Your file is ready to download.', 'success');
+      try { engine.FS('unlink', inputName); } catch (_) {}
+      try { engine.FS('unlink', outputName); } catch (_) {}
+    } catch (err) {
+      console.error(err);
+      setStatus(`Conversion failed: ${err && err.message ? err.message : 'unknown error'}. Try a smaller file or another browser.`, 'error');
+      progressLabel.textContent='Conversion failed'; remainingLabel.textContent='Time remaining: —';
+    } finally {
+      stopTicker(); converting=false; convertBtn.disabled=!selectedFile; chooseBtn.disabled=false; resetBtn.disabled=false;
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    if (converting) return;
+    selectedFile=null; input.value=''; fileLine.textContent=''; fileLine.style.display='none'; convertBtn.disabled=true;
+    progressWrap.style.display='none'; latestProgress=0; clearOutput(); setStatus('Choose a file to begin.');
+  });
+})();
+</script>
+</body>
+</html>
